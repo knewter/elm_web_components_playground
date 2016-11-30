@@ -22,6 +22,9 @@
     "paper-input": "^1.1.22",
     "app-layout": "^0.10.6",
     "paper-icon-button": "^1.1.4",
-    "iron-icons": "^1.2.0"
+    "iron-icons": "^1.2.0",
+    "paper-card": "PolymerElements/paper-card#^1.1.4",
+    "paper-fab": "PolymerElements/paper-fab#^1.2.1",
+    "paper-menu": "^1.2.2"
   }
 }

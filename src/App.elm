@@ -3,6 +3,7 @@ module App exposing (..)
 import Html exposing (Html, text, div, node)
 import Html.Attributes exposing (attribute, style)
 import WebComponents.App exposing (appDrawer, appDrawerLayout, appToolbar, appHeader, appHeaderLayout)
+import WebComponents.Paper exposing (input, button, iconButton, paperMenu, paperItem, paperCard, paperFab)
 
 
 type alias Model =
@@ -66,12 +67,12 @@ body model =
             ]
         ]
         [ text model.message
-        , node "paper-input"
+        , input
             [ attribute "label" "Username" ]
             []
         , div
             []
-            [ node "paper-button"
+            [ button
                 [ attribute "raised" "raised"
                 , style
                     [ ( "background", "#1E88E5" )
