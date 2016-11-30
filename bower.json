@@ -19,6 +19,7 @@
     "webcomponentsjs": "^0.7.23",
     "polymer": "^1.7.0",
     "paper-button": "^1.0.14",
-    "paper-input": "^1.1.22"
+    "paper-input": "^1.1.22",
+    "app-layout": "^0.10.6"
   }
 }

@@ -27,6 +27,33 @@ view : Model -> Html Msg
 view model =
     div
         []
+        [ body model
+        , header model
+        ]
+
+
+header : Model -> Html Msg
+header model =
+    node "app-header"
+        [ attribute "reveals" ""
+        ]
+        [ node "app-toolbar"
+            []
+            [ div
+                [ attribute "main-title" "" ]
+                [ text "Thousands of Spoons" ]
+            ]
+        ]
+
+
+body : Model -> Html Msg
+body model =
+    div
+        [ style
+            [ ( "min-height", "2000px" )
+            , ( "margin-top", "64px" )
+            ]
+        ]
         [ text model.message
         , node "paper-input"
             [ attribute "label" "Username" ]

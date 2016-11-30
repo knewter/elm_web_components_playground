@@ -13,6 +13,23 @@
     <link rel="import" href="/bower_components/polymer/polymer.html">
     <link rel="import" href="/bower_components/paper-input/paper-input.html">
     <link rel="import" href="/bower_components/paper-button/paper-button.html">
+    <link rel="import" href="/bower_components/app-layout/app-layout.html">
+    <style is="custom-style">
+      body {
+        /* No margin on body so toolbar can span the screen */
+        margin: 0;
+      }
+      app-header {
+        @apply(--layout-fixed-top);
+      }
+      app-toolbar {
+        /* Toolbar is the main header, so give it some color */
+        background-color: #1E88E5;
+        font-family: 'Roboto', Helvetica, sans-serif;
+        color: white;
+        --app-toolbar-font-size: 24px;
+      }
+    </style>
     <title>Elm App</title>
 </head>
 <body>
