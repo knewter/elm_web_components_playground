@@ -20,6 +20,8 @@
     "polymer": "^1.7.0",
     "paper-button": "^1.0.14",
     "paper-input": "^1.1.22",
-    "app-layout": "^0.10.6"
+    "app-layout": "^0.10.6",
+    "paper-icon-button": "^1.1.4",
+    "iron-icons": "^1.2.0"
   }
 }

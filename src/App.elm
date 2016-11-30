@@ -2,6 +2,7 @@ module App exposing (..)
 
 import Html exposing (Html, text, div, node)
 import Html.Attributes exposing (attribute, style)
+import WebComponents.App exposing (appDrawer, appDrawerLayout, appToolbar, appHeader, appHeaderLayout)
 
 
 type alias Model =
@@ -25,23 +26,31 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div
+    appDrawerLayout
         []
-        [ header model
+        [ appDrawer
+            []
+            [ text "drawer content" ]
+        , header model
         , body model
         ]
 
 
 header : Model -> Html Msg
 header model =
-    node "app-header-layout"
+    appHeaderLayout
         []
-        [ node "app-header"
+        [ appHeader
             [ attribute "reveals" ""
             ]
-            [ node "app-toolbar"
+            [ appToolbar
                 []
-                [ div
+                [ node "paper-icon-button"
+                    [ attribute "icon" "menu"
+                    , attribute "drawer-toggle" ""
+                    ]
+                    []
+                , div
                     [ attribute "main-title" "" ]
                     [ text "Thousands of Spoons" ]
                 ]
