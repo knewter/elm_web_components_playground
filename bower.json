@@ -1,0 +1,22 @@
+{
+  "name": "elm_web_components_playground",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Josh Adams <josh.rubyist@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.dailydrip.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^0.7.23",
+    "polymer": "^1.7.0"
+  }
+}
