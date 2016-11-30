@@ -1,6 +1,7 @@
 module App exposing (..)
 
-import Html exposing (Html, text, div)
+import Html exposing (Html, text, div, node)
+import Html.Attributes exposing (attribute, style)
 
 
 type alias Model =
@@ -24,7 +25,24 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [] [ text model.message ]
+    div
+        []
+        [ text model.message
+        , node "paper-input"
+            [ attribute "label" "Username" ]
+            []
+        , div
+            []
+            [ node "paper-button"
+                [ attribute "raised" "raised"
+                , style
+                    [ ( "background", "#1E88E5" )
+                    , ( "color", "white" )
+                    ]
+                ]
+                [ text "Clicky" ]
+            ]
+        ]
 
 
 subscriptions : Model -> Sub Msg
