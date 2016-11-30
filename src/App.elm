@@ -27,21 +27,24 @@ view : Model -> Html Msg
 view model =
     div
         []
-        [ body model
-        , header model
+        [ header model
+        , body model
         ]
 
 
 header : Model -> Html Msg
 header model =
-    node "app-header"
-        [ attribute "reveals" ""
-        ]
-        [ node "app-toolbar"
-            []
-            [ div
-                [ attribute "main-title" "" ]
-                [ text "Thousands of Spoons" ]
+    node "app-header-layout"
+        []
+        [ node "app-header"
+            [ attribute "reveals" ""
+            ]
+            [ node "app-toolbar"
+                []
+                [ div
+                    [ attribute "main-title" "" ]
+                    [ text "Thousands of Spoons" ]
+                ]
             ]
         ]
 
@@ -51,7 +54,6 @@ body model =
     div
         [ style
             [ ( "min-height", "2000px" )
-            , ( "margin-top", "64px" )
             ]
         ]
         [ text model.message
