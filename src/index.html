@@ -6,9 +6,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
     <script>
-      window.Polymer = {
-        dom: 'shadow'
-      };
+      // At present this is required because the elm virtual-dom doesn't play nicely with shadydom for reasons unknown
+      // window.Polymer = {
+      //   dom: 'shadow'
+      // };
     </script>
     <link rel="import" href="/bower_components/polymer/polymer.html">
     <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
