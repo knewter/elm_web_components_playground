@@ -1,9 +1,18 @@
 module Main exposing (..)
 
-import App exposing (..)
-import Html exposing (program)
+import App exposing (init, subscriptions)
+import View exposing (view)
+import Update exposing (update)
+import Msg exposing (Msg(UrlChange))
+import Model exposing (Model)
+import Navigation
 
 
 main : Program Never Model Msg
 main =
-    program { view = view, init = init, update = update, subscriptions = subscriptions }
+    Navigation.program UrlChange
+        { view = view
+        , init = init
+        , update = update
+        , subscriptions = subscriptions
+        }

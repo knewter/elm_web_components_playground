@@ -60,7 +60,7 @@
         --paper-input-container-focus-color: var(--default-primary-color);
         --paper-input-container-invalid-color: var(--invalid-color)
         --paper-input-container-input-color: var(--input-color);
-        --paper-menu-background-color: var(--secondary-background-color);
+        --paper-menu-background-color: var(--primary-background-color);
         --paper-menu-color: var(--primary-text-color);
         --paper-menu-disabled-color: var(--disabled-background-color);
         --paper-progress-active-color: var(--default-primary-color);
@@ -89,6 +89,9 @@
         --paper-toolbar-color: var(--dark-primary-text-color);
         paper-drawer-panel {
           --paper-drawer-panel-left-drawer-container: {
+            background-color: var(--primary-background-color);
+          };
+          --paper-drawer-panel-main-container: {
             background-color: var(--secondary-background-color);
           };
         }
@@ -97,6 +100,11 @@
             cursor: pointer;
           }
         }
+      }
+
+      paper-button {
+        background: var(--dark-primary-color);
+        color: var(--dark-primary-text-color);
       }
 
       body {
