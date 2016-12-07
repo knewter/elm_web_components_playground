@@ -1,0 +1,94 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="/bower_components/font-roboto/roboto.html">
+
+<style is="custom-style">
+  :root {
+    /* This is the style from https://polymerthemes.com/technology/
+    /*
+    /* I've just used CSS variables substantially where they were not used
+    /* in that theme.
+    /*
+     */
+    --default-primary-color: #373b50;
+    --dark-primary-color: var(--default-primary-color);
+    --dark-primary-text-color: #ffffff;
+    --light-primary-color: #c5cae9;
+    --accent-color: #ff4081;
+    --primary-background-color: #ffffff;
+    --primary-text-color: #444444;
+    --secondary-text-color: #444444;
+    --disabled-text-color: #313238;
+    --divider-color: #e0e0e0;
+    --disabled-background-color: #afb1b9;
+    --secondary-background-color: #f2f7fa;
+    --invalid-color: #ff6ef0;
+    --input-color: #919191;
+    --secondary-color: #90a4ae;
+    --ink-color: #d6d8e3;
+    --paper-checkbox-checked-color: var(--default-primary-color);
+    --paper-checkbox-checked-ink-color: var(--default-primary-color);
+    --paper-checkbox-unchecked-color: var(--secondary-text-color);
+    --paper-checkbox-unchecked-ink-color: var(--secondary-text-color);
+    --paper-checkbox-label-color: var(--secondary-text-color);
+    --paper-fab-background: var(--default-primary-color);
+    --paper-fab-disabled-background: var(--disabled-background-color);
+    --paper-fab-disabled-text: var(--disabled-text-color);
+    --paper-icon-button-disabled-text: var(--disabled-text-color);
+    --paper-input-container-color: var(--input-color);
+    --paper-input-container-focus-color: var(--default-primary-color);
+    --paper-input-container-invalid-color: var(--invalid-color)
+    --paper-input-container-input-color: var(--input-color);
+    --paper-menu-background-color: var(--primary-background-color);
+    --paper-menu-color: var(--primary-text-color);
+    --paper-menu-disabled-color: var(--disabled-background-color);
+    --paper-progress-active-color: var(--default-primary-color);
+    --paper-progress-secondary-color: var(--secondary-color);
+    --paper-radio-button-checked-color: var(--default-primary-color);
+    --paper-radio-button-checked-ink-color: var(--ink-color);
+    --paper-radio-button-unchecked-color: var(--secondary-text-color);
+    --paper-radio-button-unchecked-ink-color: var(--secondary-text-color);
+    --paper-radio-button-label-color: var(--secondary-text-color);
+    --paper-slider-knob-color: var(--default-primary-color);
+    --paper-slider-active-color: var(--default-primary-color);
+    --paper-slider-pin-color: var(--default-primary-color);
+    --paper-spinner-layer-1-color: var(--default-primary-color);
+    --paper-spinner-layer-2-color: var(--default-primary-color);
+    --paper-spinner-layer-3-color: var(--default-primary-color);
+    --paper-spinner-layer-4-color: var(--default-primary-color);
+    --paper-tabs-selection-bar-color: var(--secondary-color);
+    --paper-tab-ink: var(--secondary-color);
+    --paper-toggle-button-checked-bar-color: var(--default-primary-color);
+    --paper-toggle-button-checked-button-color: var(--default-primary-color);
+    --paper-toggle-button-checked-ink-color: var(--default-primary-color);
+    --paper-toggle-button-unchecked-bar-color: var(--secondary-text-color);
+    --paper-toggle-button-unchecked-button-color: var(--primary-background-color);
+    --paper-toggle-button-unchecked-ink-color: var(--primary-background-color);
+    --paper-toolbar-background: var(--dark-primary-color);
+    --paper-toolbar-color: var(--dark-primary-text-color);
+    paper-drawer-panel {
+      --paper-drawer-panel-left-drawer-container: {
+        background-color: var(--primary-background-color);
+      };
+      --paper-drawer-panel-main-container: {
+        background-color: var(--secondary-background-color);
+      };
+    }
+    paper-item {
+      --paper-item: {
+        cursor: pointer;
+      }
+    }
+
+    paper-button.colored {
+      background: var(--dark-primary-color);
+      color: var(--dark-primary-text-color);
+    }
+  }
+
+  body {
+    /* No margin on body so toolbar can span the screen */
+    margin: 0;
+    @apply(--paper-font-common-base);
+  }
+</style>
