@@ -3,8 +3,7 @@ module App exposing (..)
 import Html exposing (Html, text, div, node)
 import Html.Attributes exposing (attribute, style, class)
 import Html.Events exposing (onClick)
-import WebComponents.App exposing (appDrawer, appDrawerLayout, appToolbar, appHeader, appHeaderLayout)
-import WebComponents.Paper exposing (input, button, iconButton, paperMenu, paperItem, paperCard, paperFab)
+import Polymer.Paper as Paper
 
 
 type alias Model =
@@ -35,21 +34,27 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    appDrawerLayout
-        []
-        [ appDrawer
+    let
+        drawer model =
+            Paper.headerPanel
+                [ attribute "drawer" "" ]
+                [ Paper.toolbar
+                    []
+                    [ div [] [ text "Menu" ] ]
+                , Paper.menu []
+                    (List.map (\x -> Paper.item [] [ text x ]) [ "One", "Two", "Three", "Four" ])
+                ]
+    in
+        Paper.drawerPanel
             []
-            [ paperMenu []
-                (List.map (\x -> paperItem [] [ text x ]) [ "One", "Two", "Three", "Four" ])
+            [ drawer model
+            , mainContent model
             ]
-        , header model
-        , card model
-        ]
 
 
 card : Model -> Html Msg
 card model =
-    paperCard
+    Paper.card
         [ style [ ( "margin", "1em" ) ]
         , attribute "heading" "MegaSpoon"
         , attribute "image" "https://unsplash.it/420/230"
@@ -60,7 +65,7 @@ card model =
             [ class "card-content"
             , style [ ( "position", "relative" ) ]
             ]
-            [ paperFab
+            [ Paper.fab
                 [ attribute "icon" "add"
                 , style [ ( "position", "absolute" ), ( "right", "16px" ), ( "top", "-32px" ) ]
                 ]
@@ -69,31 +74,27 @@ card model =
             ]
         , div
             [ class "card-actions" ]
-            [ button [ onClick Lower ] [ text "Lower" ]
-            , button [ onClick Raise ] [ text "Raise" ]
+            [ Paper.button [ onClick Lower ] [ text "Lower" ]
+            , Paper.button [ onClick Raise ] [ text "Raise" ]
             ]
         ]
 
 
-header : Model -> Html Msg
-header model =
-    appHeaderLayout
-        []
-        [ appHeader
-            [ attribute "reveals" ""
-            ]
-            [ appToolbar
-                []
-                [ node "paper-icon-button"
-                    [ attribute "icon" "menu"
-                    , attribute "drawer-toggle" ""
-                    ]
-                    []
-                , div
-                    [ attribute "main-title" "" ]
-                    [ text "Thousands of Spoons" ]
+mainContent : Model -> Html Msg
+mainContent model =
+    Paper.headerPanel
+        [ attribute "main" "" ]
+        [ Paper.toolbar []
+            [ Paper.iconButton
+                [ attribute "icon" "menu"
+                , attribute "paper-drawer-toggle" ""
                 ]
+                []
+            , div
+                [ class "title" ]
+                [ text "Thousands of Spoons" ]
             ]
+        , card model
         ]
 
 
@@ -105,12 +106,12 @@ body model =
             ]
         ]
         [ text model.message
-        , input
+        , Paper.input
             [ attribute "label" "Username" ]
             []
         , div
             []
-            [ button
+            [ Paper.button
                 [ attribute "raised" "raised"
                 , style
                     [ ( "background", "#1E88E5" )

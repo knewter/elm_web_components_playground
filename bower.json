@@ -26,6 +26,9 @@
     "paper-card": "PolymerElements/paper-card#^1.1.4",
     "paper-fab": "PolymerElements/paper-fab#^1.2.1",
     "paper-menu": "^1.2.2",
-    "paper-item": "^1.2.1"
+    "paper-item": "^1.2.1",
+    "paper-toolbar": "^1.1.7",
+    "paper-drawer-panel": "^1.0.10",
+    "paper-header-panel": "^1.1.7"
   }
 }
