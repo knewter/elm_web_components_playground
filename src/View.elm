@@ -50,7 +50,7 @@ drawer model =
         Paper.headerPanel
             [ attribute "drawer" "" ]
             [ Paper.toolbar
-                []
+                [ style [ ( "background", "#282b3b" ) ] ]
                 [ div [] [ text "Menu" ] ]
             , Paper.menu
                 [ attribute "selected" selected
