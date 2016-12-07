@@ -14,6 +14,7 @@ import List.Extra
 
 import View.Login
 import View.Cards
+import View.Home
 
 
 -- END VIEW MODULES
@@ -32,7 +33,8 @@ drawer : Model -> Html Msg
 drawer model =
     let
         links =
-            [ Login
+            [ Home
+            , Login
             , Cards
             ]
 
@@ -93,10 +95,10 @@ routeView model =
     case currentRoute model of
         Just route ->
             case route of
-                Login ->
-                    View.Login.view model
-
                 Home ->
+                    View.Home.view model
+
+                Login ->
                     View.Login.view model
 
                 Cards ->

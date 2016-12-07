@@ -24,7 +24,7 @@ toString : Route -> String
 toString route =
     case route of
         Home ->
-            "home"
+            ""
 
         Login ->
             "login"
