@@ -26,6 +26,10 @@
     "paper-card": "PolymerElements/paper-card#^1.1.4",
     "paper-fab": "PolymerElements/paper-fab#^1.2.1",
     "paper-menu": "^1.2.2",
-    "paper-item": "^1.2.1"
+    "paper-item": "^1.2.1",
+    "gold-cc-cvc-input": "^1.0.9",
+    "gold-cc-expiration-input": "^1.1.3",
+    "gold-cc-input": "^1.0.7",
+    "gold-zip-input": "^1.0.6"
   }
 }

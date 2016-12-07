@@ -43,7 +43,63 @@ view model =
                 (List.map (\x -> paperItem [] [ text x ]) [ "One", "Two", "Three", "Four" ])
             ]
         , header model
-        , card model
+        , creditCardForm model
+        ]
+
+
+creditCardForm : Model -> Html Msg
+creditCardForm model =
+    node "paper-card"
+        [ style
+            [ ( "padding", "1em" )
+            , ( "width", "50%" )
+            , ( "margin", "1em" )
+            ]
+        , attribute "heading" "Billing Information"
+        , attribute "elevation" "2"
+        ]
+        [ div [ class "card-content" ]
+            [ input
+                [ attribute "label" "Name"
+                , attribute "required" ""
+                , attribute "auto-validate" ""
+                , attribute "error-message" "I need a name"
+                ]
+                []
+            , node "gold-cc-input"
+                [ attribute "label" "Credit Card Number"
+                , attribute "required" ""
+                , attribute "auto-validate" "true"
+                , attribute "error-message" "This is not a valid credit card number"
+                ]
+                []
+            , node "gold-cvc-input"
+                [ attribute "label" "CVC"
+                , attribute "required" ""
+                , attribute "auto-validate" ""
+                , attribute "error-message" "CVC is required"
+                ]
+                []
+            , node "gold-cc-expiration-input"
+                [ attribute "label" "Expiration"
+                , attribute "required" ""
+                , attribute "auto-validate" ""
+                , attribute "error-message" "Expiration dates are important"
+                ]
+                []
+            , node "gold-zip-input"
+                [ attribute "label" "Zip Code"
+                , attribute "required" ""
+                , attribute "auto-validate" ""
+                , attribute "error-message" "Please enter a valid zip code"
+                ]
+                []
+            ]
+        , div [ class "card-actions" ]
+            [ button
+                []
+                [ text "Submit" ]
+            ]
         ]
 
 
