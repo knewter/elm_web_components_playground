@@ -20,17 +20,19 @@ view model =
         , attribute "heading" "Login"
         , attribute "elevation" "2"
         ]
-        [ Paper.input
-            [ label "Username" ]
-            []
-        , Paper.input
-            [ label "Password" ]
-            []
+        [ div
+            [ class "card-content" ]
+            [ Paper.input
+                [ label "Username" ]
+                []
+            , Paper.input
+                [ label "Password" ]
+                []
+            ]
         , div
-            []
+            [ class "card-actions" ]
             [ Paper.button
-                [ attribute "raised" "raised"
-                ]
+                []
                 [ text "Login" ]
             ]
         ]

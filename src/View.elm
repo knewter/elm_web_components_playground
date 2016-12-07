@@ -15,6 +15,7 @@ import List.Extra
 import View.Login
 import View.Cards
 import View.Home
+import View.Forms
 
 
 -- END VIEW MODULES
@@ -36,6 +37,7 @@ drawer model =
             [ Home
             , Login
             , Cards
+            , Forms
             ]
 
         selected =
@@ -105,7 +107,7 @@ routeView model =
                     View.Cards.view model
 
                 Forms ->
-                    View.Login.view model
+                    View.Forms.view model
 
         Nothing ->
             text "404"
