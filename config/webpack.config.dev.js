@@ -2,6 +2,8 @@ const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const paths = require('../config/paths');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 module.exports = {
 
@@ -36,12 +38,16 @@ module.exports = {
     moduleTemplates: [ '*-loader' ]
   },
   resolve: {
-    modulesDirectories: [ 'node_modules' ],
-    extensions: [ '', '.js', '.elm' ]
+    modulesDirectories: [ 'node_modules', 'bower_components' ],
+    extensions: [ '', '.js', '.elm', '.html' ]
   },
   module: {
     noParse: /\.elm$/,
     loaders: [
+      {
+        test: /\.html$/,
+        loader: 'html'
+      },
       {
         test: /\.elm$/,
         exclude: [ /elm-stuff/, /node_modules/ ],
@@ -79,6 +85,13 @@ module.exports = {
       template: paths.template,
       favicon: paths.favicon
     }),
-    new webpack.HotModuleReplacementPlugin()
+
+    new webpack.HotModuleReplacementPlugin(),
+
+    new CopyWebpackPlugin(
+      [
+        { from: 'src/static', to: 'static' }
+      ]
+    ),
   ]
 };

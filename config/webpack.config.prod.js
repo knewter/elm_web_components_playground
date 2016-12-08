@@ -4,6 +4,7 @@ const paths = require('../config/paths');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const root = process.cwd();
 
@@ -12,6 +13,9 @@ module.exports = {
   entry: [
     paths.entry
   ],
+  stats: {
+    errorDetails: true
+  },
   output: {
 
     // The build folder.
@@ -27,8 +31,8 @@ module.exports = {
     moduleTemplates: [ '*-loader' ]
   },
   resolve: {
-    modulesDirectories: [ 'node_modules' ],
-    extensions: [ '', '.js', '.elm' ]
+    modulesDirectories: [ 'node_modules', 'bower_components' ],
+    extensions: [ '', '.js', '.elm', '.html' ]
   },
   module: {
     noParse: /\.elm$/,
@@ -70,7 +74,6 @@ module.exports = {
     ];
   },
   plugins: [
-
     // Remove the content of the ./dist/ folder.
     new CleanWebpackPlugin([ 'dist' ], {
       root: root,
@@ -106,6 +109,13 @@ module.exports = {
       }
     }),
 
-    new ExtractTextPlugin('css/[name].[contenthash:8].css')
+    new ExtractTextPlugin('css/[name].[contenthash:8].css'),
+
+    new CopyWebpackPlugin(
+      [
+        { from: 'src/static', to: 'static' }
+      ]
+    ),
+
   ]
 };
