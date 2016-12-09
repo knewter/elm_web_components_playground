@@ -7,11 +7,10 @@
    * properties.  This lets you do theming.
    */
   :root {
-    /* This is the style from https://polymerthemes.com/technology/
-    /*
-    /* I've just used CSS variables substantially where they were not used
-    /* in that theme.
-    /*
+    /* This style is derived from https://polymerthemes.com/technology/
+     *
+     * I've also used CSS variables substantially where they were not used
+     * in that theme.
      */
     --default-primary-color: #373b50;
     --dark-primary-color: var(--default-primary-color);
@@ -83,7 +82,7 @@
   }
 
   paper-button.colored {
-    background: var(--dark-primary-color);
+    background: var(--accent-color);
     color: var(--dark-primary-text-color);
   }
 
