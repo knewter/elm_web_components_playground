@@ -9,6 +9,8 @@ I've created [an introductory walkthrough video / blog post for pairing the
 two](https://www.dailydrip.com/topics/elm/drips/web-components-introduction),
 if you'd like to check it out.
 
+You can [try out a demo here](https://knewter.github.io/elm_web_components_playground/).
+
 ----------
 
 This project was bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).
