@@ -1,8 +1,9 @@
 module View.DatePicker exposing (view)
 
 import Html exposing (Html, node)
-import Html.Attributes exposing (attribute)
+import Html.Attributes exposing (attribute, class)
 import Html.Events exposing (on)
+import Polymer.Paper as Paper
 import Msg exposing (Msg)
 import Model exposing (Model)
 import Date exposing (Date)
@@ -14,13 +15,20 @@ import String
 
 view : Model -> Html Msg
 view model =
-    node "paper-date-picker"
-        [ model.date
-            |> Date.Extra.toUtcFormattedString "YYYY-MM-dd"
-            |> attribute "date"
-        , on "date-changed" logDate
+    Paper.card
+        [ attribute "heading" "Date picker"
+        , attribute "elevation" "2"
+        , class "view-date-picker"
         ]
-        []
+        [ node "paper-date-picker"
+            [ model.date
+                |> Date.Extra.toUtcFormattedString "YYYY-MM-dd"
+                |> attribute "date"
+            , on "date-changed" logDate
+            , class "card-content"
+            ]
+            []
+        ]
 
 
 logDate : Decode.Decoder Msg

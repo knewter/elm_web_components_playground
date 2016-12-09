@@ -27,7 +27,7 @@ update msg model =
 
         NewUrl route ->
             ( model
-            , Navigation.newUrl <| "/#" ++ Routes.toString route
+            , Navigation.newUrl <| "#" ++ Routes.toString route
             )
 
         SetDate date ->
