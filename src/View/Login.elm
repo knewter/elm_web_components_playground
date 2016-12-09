@@ -12,11 +12,7 @@ import Polymer.Attributes exposing (label)
 view : Model -> Html Msg
 view model =
     Paper.card
-        [ style
-            [ ( "padding", "1em" )
-            , ( "width", "50%" )
-            , ( "margin", "0 auto" )
-            ]
+        [ class "view-login"
         , attribute "heading" "Login"
         , attribute "elevation" "2"
         ]

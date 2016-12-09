@@ -26,6 +26,7 @@
     --divider-color: #e0e0e0;
     --disabled-background-color: #afb1b9;
     --secondary-background-color: #f2f7fa;
+    --secondary-background-color-lightened: #f1f6fa;
     --invalid-color: #ff6ef0;
     --input-color: #919191;
     --secondary-color: #90a4ae;
@@ -70,10 +71,15 @@
     --paper-toggle-button-unchecked-ink-color: var(--primary-background-color);
     --paper-toolbar-background: var(--dark-primary-color);
     --paper-toolbar-color: var(--dark-primary-text-color);
+
+    --base-margin: {
+      margin: 1em;
+    }
   }
 
   body {
     @apply(--paper-font-common-base);
+    background-color: var(--secondary-background-color);
   }
 
   paper-button.colored {
@@ -81,22 +87,56 @@
     color: var(--dark-primary-text-color);
   }
 
-  paper-header-panel[drawer] paper-toolbar {
-    --paper-toolbar-background: var(--dark-primary-color-darkened);
+  app-header {
+    --app-header-shadow: {
+      box-shadow: inset 0px 5px 2px -3px rgba(0, 0, 0, 0.2);
+    };
   }
 
-  paper-drawer-panel {
-    --paper-drawer-panel-left-drawer-container: {
-      background-color: var(--primary-background-color);
-    };
-    --paper-drawer-panel-main-container: {
-      background-color: var(--secondary-background-color);
-    };
+  app-toolbar {
+    background: var(--dark-primary-color);
+    color: var(--dark-primary-text-color);
+  }
+
+  app-drawer app-toolbar {
+    background: var(--dark-primary-color-darkened);
+  }
+
+  app-drawer .drawer-contents {
+    height: 100%;
+    overflow: auto;
   }
 
   paper-item {
     --paper-item: {
       cursor: pointer;
     }
+  }
+
+  paper-card .card-actions {
+    background-color: var(--secondary-background-color-lightened);
+  }
+
+  /* We apply a base margin to most screens.  We do this because otherwise it's
+   * hard to avoid the margin on screens where we don't want it - for instance,
+   * anywhere we would like the content to take up the entire space of the
+   * content area such as a photo or map view.
+   *
+   * If your view is pushed up against the drawer and you want it to have more
+   * spacing, this is where you want to add your wrapper class selector.
+   */
+  .view-home,
+  .view-login,
+  .view-cards,
+  .view-forms {
+    @apply(--base-margin);
+  }
+
+  .view-home {
+    width: 80%;
+  }
+
+  .view-login {
+    width: 80%;
   }
 </style>

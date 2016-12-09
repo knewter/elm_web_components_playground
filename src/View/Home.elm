@@ -13,15 +13,14 @@ import Markdown
 view : Model -> Html Msg
 view model =
     Paper.card
-        [ style
-            [ ( "padding", "1em" )
-            , ( "width", "80%" )
-            , ( "margin", "0 auto" )
-            ]
+        [ class "view-home"
         , attribute "heading" "Home"
         , attribute "elevation" "2"
         ]
-        [ Markdown.toHtml [] bodyMarkdown ]
+        [ Markdown.toHtml
+            [ class "card-content" ]
+            bodyMarkdown
+        ]
 
 
 bodyMarkdown : String

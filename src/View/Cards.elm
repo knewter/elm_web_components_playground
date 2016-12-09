@@ -12,7 +12,7 @@ import Polymer.Attributes exposing (label)
 view : Model -> Html Msg
 view model =
     Paper.card
-        [ style [ ( "margin", "1em" ) ]
+        [ class "view-cards"
         , attribute "heading" "MegaSpoon"
         , attribute "image" "https://unsplash.it/420/230"
         , attribute "elevation" (toString model.elevation)

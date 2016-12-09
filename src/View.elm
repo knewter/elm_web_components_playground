@@ -3,6 +3,7 @@ module View exposing (view)
 import Html exposing (Html, text, div, node, a)
 import Html.Attributes exposing (attribute, style, class, href)
 import Html.Events exposing (onClick)
+import Polymer.App as App
 import Polymer.Paper as Paper
 import Model exposing (Model)
 import Msg exposing (Msg(..))
@@ -23,7 +24,7 @@ import View.Forms
 
 view : Model -> Html Msg
 view model =
-    Paper.drawerPanel
+    App.drawerLayout
         []
         [ drawer model
         , body model
@@ -47,15 +48,18 @@ drawer model =
                 |> Maybe.withDefault 0
                 |> toString
     in
-        Paper.headerPanel
-            [ attribute "drawer" "" ]
-            [ Paper.toolbar
-                []
-                [ div [] [ text "Menu" ] ]
-            , Paper.menu
-                [ attribute "selected" selected
+        App.drawer
+            []
+            [ div
+                [ class "drawer-contents" ]
+                [ App.toolbar
+                    []
+                    [ div [] [ text "Menu" ] ]
+                , Paper.menu
+                    [ attribute "selected" selected
+                    ]
+                    (List.map menuLink links)
                 ]
-                (List.map menuLink links)
             ]
 
 
@@ -68,20 +72,26 @@ menuLink route =
 
 body : Model -> Html Msg
 body model =
-    Paper.headerPanel
-        [ attribute "main" "" ]
-        [ Paper.toolbar []
-            [ Paper.iconButton
-                [ attribute "icon" "menu"
-                , attribute "paper-drawer-toggle" ""
-                ]
+    App.headerLayout
+        []
+        [ App.header
+            [ attribute "effects" "waterfall"
+            , attribute "fixed" ""
+            ]
+            [ App.toolbar
                 []
-            , div
-                [ class "title" ]
-                [ text "Thousands of Spoons" ]
+                [ Paper.iconButton
+                    [ attribute "icon" "menu"
+                    , attribute "drawer-toggle" ""
+                    ]
+                    []
+                , div
+                    [ class "title" ]
+                    [ text "Thousands of Spoons" ]
+                ]
             ]
         , div
-            [ style [ ( "padding", "1em" ) ] ]
+            []
             [ routeView model ]
         ]
 
