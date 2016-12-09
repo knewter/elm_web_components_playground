@@ -70,7 +70,7 @@ view model =
                 [ class "card-actions" ]
                 [ Paper.button
                     [ onClick <| NewUrl DatePicker ]
-                    [ text "Home" ]
+                    [ text "Next" ]
                 ]
             ]
         ]
