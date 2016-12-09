@@ -41,7 +41,7 @@ If you want to get started learning how to work with Elm and Polymer,
 
 ### About DailyDrip
 
-[![DailyDrip](src/static/dailydrip.png)](http://www.dailydrip.com)
+[![DailyDrip](static/dailydrip.png)](http://www.dailydrip.com)
 
 > This code is part of [Elm Drips](https://www.dailydrip.com/topics/elm/), a
 > daily continous learning website where you can just spend 5 minutes a day to
