@@ -1,33 +1,48 @@
 module View.DatePicker exposing (view)
 
-import Html exposing (Html, node)
+import Html exposing (Html, node, div, p, text)
 import Html.Attributes exposing (attribute, class)
-import Html.Events exposing (on)
+import Html.Events exposing (on, onClick)
 import Polymer.Paper as Paper
 import Msg exposing (Msg)
 import Model exposing (Model)
 import Date exposing (Date)
 import Date.Extra
 import Json.Decode as Decode
-import Msg exposing (Msg(SetDate))
+import Msg exposing (Msg(SetDate, NewUrl))
 import String
+import Routes exposing (Route(Home))
 
 
 view : Model -> Html Msg
 view model =
-    Paper.card
-        [ attribute "heading" "Date picker"
-        , attribute "elevation" "2"
-        , class "view-date-picker"
-        ]
-        [ node "paper-date-picker"
-            [ model.date
-                |> Date.Extra.toUtcFormattedString "YYYY-MM-dd"
-                |> attribute "date"
-            , on "date-changed" logDate
-            , class "card-content"
+    div
+        [ class "view-date-picker" ]
+        [ Paper.card
+            [ attribute "heading" "Date picker"
+            , attribute "elevation" "2"
             ]
-            []
+            [ node "paper-date-picker"
+                [ model.date
+                    |> Date.Extra.toUtcFormattedString "YYYY-MM-dd"
+                    |> attribute "date"
+                , on "date-changed" logDate
+                , class "card-content"
+                ]
+                []
+            ]
+        , Paper.card
+            [ attribute "elevation" "2" ]
+            [ p
+                [ class "card-content" ]
+                [ text "That's everything, go back home!" ]
+            , div
+                [ class "card-actions" ]
+                [ Paper.button
+                    [ onClick <| NewUrl Home ]
+                    [ text "Home" ]
+                ]
+            ]
         ]
 
 

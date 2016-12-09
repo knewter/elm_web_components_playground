@@ -74,6 +74,13 @@
     --base-margin: {
       margin: 1em;
     }
+
+    --paper-card-header-image-text: {
+      color: white;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
   }
 
   body {
@@ -140,13 +147,22 @@
     width: 80%;
   }
 
-  paper-card.view-cards {
-    --paper-card-header-image-text: {
-      color: white;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-      font-weight: 600;
-      text-transform: uppercase;
-    }
+  paper-card {
+    width: 80%;
+    display: block;
+    margin-bottom: 1em;
+  }
+
+  .view-login paper-card {
+    max-width: 400px;
+  }
+
+  .view-cards paper-card {
+    width: 400px;
+  }
+
+  .view-forms paper-card {
+    max-width: 400px;
   }
 
 </style>

@@ -3,11 +3,12 @@ module View.Home exposing (view)
 import Html exposing (Html, text, div, node, h2, p, a)
 import Html.Attributes exposing (attribute, style, class, href)
 import Html.Events exposing (onClick)
-import Msg exposing (Msg)
+import Msg exposing (Msg(NewUrl))
 import Model exposing (Model)
 import Polymer.Paper as Paper
 import Polymer.Attributes exposing (label)
 import Markdown
+import Routes exposing (Route(Login))
 
 
 view : Model -> Html Msg
@@ -20,6 +21,12 @@ view model =
         [ Markdown.toHtml
             [ class "card-content" ]
             bodyMarkdown
+        , div
+            [ class "card-actions" ]
+            [ Paper.button
+                [ onClick <| NewUrl Login ]
+                [ text "Next" ]
+            ]
         ]
 
 
@@ -43,7 +50,7 @@ If you want to get started learning how to work with Elm and Polymer,
 
 [![DailyDrip](static/dailydrip.png)](http://www.dailydrip.com)
 
-> This code is part of [Elm Drips](https://www.dailydrip.com/topics/elm/), a
-> daily continous learning website where you can just spend 5 minutes a day to
-> learn more about Elm (or other things!)
+This code is part of [Elm Drips](https://www.dailydrip.com/topics/elm/), a
+daily continous learning website where you can just spend 5 minutes a day to
+learn more about Elm (or other things!)
     """
