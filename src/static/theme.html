@@ -31,7 +31,7 @@
     --paper-checkbox-unchecked-color: var(--secondary-text-color);
     --paper-checkbox-unchecked-ink-color: var(--secondary-text-color);
     --paper-checkbox-label-color: var(--secondary-text-color);
-    --paper-fab-background: var(--default-primary-color);
+    --paper-fab-background: var(--accent-color);
     --paper-fab-disabled-background: var(--disabled-background-color);
     --paper-fab-disabled-text: var(--disabled-text-color);
     --paper-icon-button-disabled-text: var(--disabled-text-color);
@@ -66,29 +66,37 @@
     --paper-toggle-button-unchecked-ink-color: var(--primary-background-color);
     --paper-toolbar-background: var(--dark-primary-color);
     --paper-toolbar-color: var(--dark-primary-text-color);
-    paper-drawer-panel {
-      --paper-drawer-panel-left-drawer-container: {
-        background-color: var(--primary-background-color);
-      };
-      --paper-drawer-panel-main-container: {
-        background-color: var(--secondary-background-color);
-      };
-    }
-    paper-item {
-      --paper-item: {
-        cursor: pointer;
-      }
-    }
-
-    paper-button.colored {
-      background: var(--dark-primary-color);
-      color: var(--dark-primary-text-color);
-    }
   }
 
   body {
-    /* No margin on body so toolbar can span the screen */
-    margin: 0;
     @apply(--paper-font-common-base);
+  }
+
+  paper-button.colored {
+    background: var(--dark-primary-color);
+    color: var(--dark-primary-text-color);
+  }
+
+  paper-header-panel[drawer] paper-toolbar {
+    --paper-toolbar-background: #282b3b;
+  }
+
+  paper-drawer-panel {
+    --paper-drawer-panel-left-drawer-container: {
+      background-color: var(--primary-background-color);
+    };
+    --paper-drawer-panel-main-container: {
+      background-color: var(--secondary-background-color);
+    };
+  }
+
+  paper-item {
+    --paper-item: {
+      cursor: pointer;
+    }
+    --paper-item-selected: {
+      background-color: var(--accent-color);
+      color: white;
+    }
   }
 </style>

@@ -32,7 +32,7 @@ view model =
         , div
             [ class "card-actions" ]
             [ Paper.button
-                []
+                [ class "colored" ]
                 [ text "Login" ]
             ]
         ]
