@@ -8,6 +8,7 @@ type Route
     | Login
     | Cards
     | Forms
+    | DatePicker
 
 
 parseRoute : Url.Parser (Route -> a) a
@@ -17,6 +18,7 @@ parseRoute =
         , Url.map Login (s "login")
         , Url.map Cards (s "cards")
         , Url.map Forms (s "forms")
+        , Url.map DatePicker (s "date-picker")
         ]
 
 
@@ -34,3 +36,6 @@ toString route =
 
         Forms ->
             "forms"
+
+        DatePicker ->
+            "date-picker"

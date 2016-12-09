@@ -17,6 +17,7 @@ import View.Login
 import View.Cards
 import View.Home
 import View.Forms
+import View.DatePicker
 
 
 -- END VIEW MODULES
@@ -39,6 +40,7 @@ drawer model =
             , Login
             , Cards
             , Forms
+            , DatePicker
             ]
 
         selected =
@@ -118,6 +120,9 @@ routeView model =
 
                 Forms ->
                     View.Forms.view model
+
+                DatePicker ->
+                    View.DatePicker.view model
 
         Nothing ->
             text "404"
