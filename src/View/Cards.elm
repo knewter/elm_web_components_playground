@@ -14,7 +14,7 @@ view model =
     Paper.card
         [ class "view-cards"
         , attribute "heading" "MegaSpoon"
-        , attribute "image" "https://unsplash.it/420/230"
+        , attribute "image" "http://lorempixel.com/420/230"
         , attribute "elevation" (toString model.elevation)
         , attribute "animated" "true"
         ]

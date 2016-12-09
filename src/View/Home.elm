@@ -38,4 +38,12 @@ You can find [the source code here](http://github.com/knewter/elm_web_components
 
 If you want to get started learning how to work with Elm and Polymer,
 [I've written it up and recorded a screencast](https://www.dailydrip.com/topics/elm/drips/web-components-introduction).
+
+### About DailyDrip
+
+[![DailyDrip](src/static/dailydrip.png)](http://www.dailydrip.com)
+
+> This code is part of [Elm Drips](https://www.dailydrip.com/topics/elm/), a
+> daily continous learning website where you can just spend 5 minutes a day to
+> learn more about Elm (or other things!)
     """
