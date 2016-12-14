@@ -1,3 +1,7 @@
 {
-  "minifyJS": true
+  "minifyJS": true,
+  "removeComments": true,
+  "collapseWhitespace": true,
+  "preserveLineBreaks": false,
+  "minifyCSS": true
 }

@@ -34,9 +34,24 @@ module.exports = {
     modulesDirectories: [ 'node_modules', 'bower_components' ],
     extensions: [ '', '.js', '.elm', '.html' ]
   },
+  'html-minifier-loader': {
+    removeComments: true,
+    collapseWhitespace: true,
+    conservativeCollapse: true,
+    preserveLineBreaks: false,
+    minifyJS: true,
+  },
   module: {
     noParse: /\.elm$/,
     loaders: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015']
+        }
+      },
       {
         test: /\.elm$/,
         exclude: [ /elm-stuff/, /node_modules/ ],
@@ -58,7 +73,12 @@ module.exports = {
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
-      }
+      },
+      {
+        test: /\.html$/,
+        exclude: /node_modules/,
+        loader: 'raw!html-minifier'
+      },
     ]
   },
   postcss: function() {

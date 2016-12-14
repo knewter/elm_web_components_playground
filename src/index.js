@@ -8,7 +8,7 @@ window.Polymer = {
 }
 
 // Require your main webcomponent file (that can be just a file filled with html imports, custom styles or whatever)
-require('vulcanize?es6=false!./imports.html')
+require('vulcanize?es6=false&base=./!./imports.html')
 
 // Require our styles
 require('./main.css')
