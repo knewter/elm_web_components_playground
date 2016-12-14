@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const paths = require('../config/paths');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
 module.exports = {
 
   devtool: 'eval',
