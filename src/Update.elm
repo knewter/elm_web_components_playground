@@ -5,6 +5,7 @@ import Msg exposing (Msg(..))
 import Routes exposing (parseRoute)
 import UrlParser as Url
 import Navigation
+import Ports
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -22,7 +23,7 @@ update msg model =
                     Url.parseHash parseRoute location :: model.history
             in
                 ( { model | history = newHistory }
-                , Cmd.none
+                , Ports.closeDrawer ()
                 )
 
         NewUrl route ->

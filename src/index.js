@@ -17,4 +17,18 @@ window.addEventListener('WebComponentsReady', () => {
   let Elm = require('./Main.elm')
   let root = document.getElementById('root')
   let app = Elm.Main.embed(root)
+
+  app.ports.closeDrawer.subscribe(() => {
+    if(!getAppDrawer().persistent){
+      getAppDrawer().close()
+    }
+  })
+
+  function getAppDrawerLayout() {
+    return document.getElementsByTagName('app-drawer-layout')[0]
+  }
+
+  function getAppDrawer() {
+    return getAppDrawerLayout().drawer
+  }
 })
