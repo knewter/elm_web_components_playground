@@ -67,6 +67,8 @@ view model =
                         []
                     , node "gold-zip-input"
                         [ label "Zip Code"
+                        , value creditCard.zip
+                        , onInput <| Billing << CreditCard << SetZip
                         , attribute "required" ""
                         , attribute "auto-validate" ""
                         , attribute "error-message" "Please enter a valid zip code"
@@ -75,7 +77,7 @@ view model =
                     ]
                 , div [ class "card-actions" ]
                     [ Paper.button
-                        []
+                        [ onClick <| Billing <| AskForToken ]
                         [ text "Submit" ]
                     ]
                 ]

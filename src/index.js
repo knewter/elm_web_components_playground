@@ -24,6 +24,23 @@ window.addEventListener('WebComponentsReady', () => {
     }
   })
 
+  // Set our stripe publishable key - yours will be different!
+  Stripe.setPublishableKey('pk_test_ui9kge72Kvk3KHQnRYoRSPYf')
+  app.ports.askForToken.subscribe((creditCardModel) => {
+    Stripe.card.createToken({
+      number: creditCardModel.ccNumber,
+      cvc: creditCardModel.cvc,
+      exp: creditCardModel.expiration,
+      address_zip: creditCardModel.zip,
+    }, stripeResponseHandler)
+  })
+
+  function stripeResponseHandler(status, response){
+    console.log("got stripe data back!")
+    console.log("status", status)
+    console.log("response", response)
+  }
+
   function getAppDrawerLayout() {
     return document.getElementsByTagName('app-drawer-layout')[0]
   }
