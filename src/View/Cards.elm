@@ -6,7 +6,6 @@ import Html.Events exposing (onClick)
 import Msg exposing (Msg(Raise, Lower, NewUrl))
 import Model exposing (Model)
 import Polymer.Paper as Paper
-import Polymer.Attributes exposing (label)
 import Routes exposing (Route(Forms))
 
 

@@ -13,6 +13,7 @@ init location =
     ( { history = [ Url.parseHash parseRoute location ]
       , elevation = 2
       , date = Date.fromTime 0
+      , billing = Model.initialBillingModel
       }
     , Cmd.none
     )
