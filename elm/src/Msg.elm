@@ -3,6 +3,7 @@ module Msg exposing (Msg(..), BillingMsg(..), CreditCardMsg(..))
 import Navigation
 import Routes exposing (Route)
 import Date exposing (Date)
+import Model exposing (SubscriptionModel)
 
 
 type Msg
@@ -19,7 +20,7 @@ type BillingMsg
     = CreditCard CreditCardMsg
     | AskForToken
     | ReceiveToken String
-    | SubscriptionCreated String
+    | SubscriptionCreated SubscriptionModel
 
 
 type CreditCardMsg

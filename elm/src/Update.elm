@@ -84,14 +84,10 @@ updateBilling msg model =
                 }
             )
 
-        SubscriptionCreated subscriptionId ->
-            let
-                _ =
-                    Debug.log "subscription created" subscriptionId
-            in
-                ( model
-                , Cmd.none
-                )
+        SubscriptionCreated subscription ->
+            ( { model | subscription = Just subscription }
+            , Navigation.newUrl <| "#" ++ Routes.toString Routes.Home
+            )
 
 
 updateCreditCard : CreditCardMsg -> CreditCardModel -> CreditCardModel

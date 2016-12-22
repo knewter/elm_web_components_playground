@@ -35,13 +35,28 @@ view model =
 drawer : Model -> Html Msg
 drawer model =
     let
-        links =
+        unauthenticatedLinks =
             [ Home
             , Login
             , Cards
             , Forms
             , DatePicker
             ]
+
+        authenticatedLinks =
+            [ Home
+            , Cards
+            , Forms
+            , DatePicker
+            ]
+
+        links =
+            case model.billing.subscription of
+                Nothing ->
+                    unauthenticatedLinks
+
+                Just _ ->
+                    authenticatedLinks
 
         selected =
             links

@@ -53,7 +53,7 @@ initialBillingModel : BillingModel
 initialBillingModel =
     { token = Nothing
     , creditCard = initialCreditCardModel
-    , suscription = Nothing
+    , subscription = Nothing
     }
 
 

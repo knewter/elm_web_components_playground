@@ -12,21 +12,35 @@ import Routes exposing (Route(Login))
 
 view : Model -> Html Msg
 view model =
-    Paper.card
-        [ class "view-home"
-        , attribute "heading" "Home"
-        , attribute "elevation" "2"
-        ]
-        [ Markdown.toHtml
-            [ class "card-content" ]
-            bodyMarkdown
-        , div
-            [ class "card-actions" ]
-            [ Paper.button
-                [ onClick <| NewUrl Login ]
-                [ text "Next" ]
+    let
+        normalHome =
+            Markdown.toHtml
+                [ class "card-content" ]
+                bodyMarkdown
+
+        body =
+            case model.billing.subscription of
+                Nothing ->
+                    normalHome
+
+                Just subscription ->
+                    div
+                        [ class "card-content" ]
+                        [ text <| "Subscription: " ++ (toString subscription) ]
+    in
+        Paper.card
+            [ class "view-home"
+            , attribute "heading" "Home"
+            , attribute "elevation" "2"
             ]
-        ]
+            [ body
+            , div
+                [ class "card-actions" ]
+                [ Paper.button
+                    [ onClick <| NewUrl Login ]
+                    [ text "Next" ]
+                ]
+            ]
 
 
 bodyMarkdown : String

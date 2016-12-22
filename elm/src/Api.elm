@@ -2,7 +2,7 @@ module Api exposing (createSubscription)
 
 import Http exposing (Response)
 import HttpBuilder exposing (..)
-import Model exposing (SubscriptionModel)
+import Model exposing (NewSubscriptionModel)
 import Msg exposing (Msg(NoOp, Billing), BillingMsg(SubscriptionCreated))
 import Time
 import Json.Decode as Decode
@@ -19,7 +19,7 @@ apiUrl url =
     baseUrl ++ url
 
 
-createSubscription : SubscriptionModel -> Cmd Msg
+createSubscription : NewSubscriptionModel -> Cmd Msg
 createSubscription subscription =
     post (apiUrl "subscriptions")
         |> withJsonBody (subscriptionEncoder subscription)
@@ -32,7 +32,7 @@ handleCreateSubscriptionComplete : Result Http.Error String -> Msg
 handleCreateSubscriptionComplete result =
     case result of
         Ok subscriptionId ->
-            Billing <| SubscriptionCreated subscriptionId
+            Billing <| SubscriptionCreated { id = subscriptionId }
 
         Err errorString ->
             let
@@ -47,7 +47,7 @@ subscriptionDecoder =
     Decode.field "id" Decode.string
 
 
-subscriptionEncoder : SubscriptionModel -> Encode.Value
+subscriptionEncoder : NewSubscriptionModel -> Encode.Value
 subscriptionEncoder subscription =
     Encode.object
         [ ( "email", Encode.string subscription.email )
