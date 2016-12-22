@@ -28,7 +28,8 @@ defmodule Backend.Mixfile do
         :gettext,
         :phoenix_ecto,
         :postgrex,
-        :stripety_stripe,
+        :stripity_stripe,
+        :corsica,
       ]
     ]
   end
@@ -51,6 +52,7 @@ defmodule Backend.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:stripity_stripe, "~> 2.0.0-alpha.5"},
+      {:corsica, "~> 0.5"},
     ]
   end
 

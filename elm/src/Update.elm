@@ -12,6 +12,7 @@ import Routes exposing (parseRoute)
 import UrlParser as Url
 import Navigation
 import Ports
+import Api
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -51,6 +52,9 @@ update msg model =
                 , billingCmd
                 )
 
+        NoOp ->
+            ( model, Cmd.none )
+
 
 updateBilling : BillingMsg -> BillingModel -> ( BillingModel, Cmd Msg )
 updateBilling msg model =
@@ -73,8 +77,21 @@ updateBilling msg model =
                 | token = Just token
                 , creditCard = Model.initialCreditCardModel
               }
-            , Cmd.none
+            , Api.createSubscription
+                { email = "foo@example.com"
+                , token = token
+                , plan = "basic"
+                }
             )
+
+        SubscriptionCreated subscriptionId ->
+            let
+                _ =
+                    Debug.log "subscription created" subscriptionId
+            in
+                ( model
+                , Cmd.none
+                )
 
 
 updateCreditCard : CreditCardMsg -> CreditCardModel -> CreditCardModel

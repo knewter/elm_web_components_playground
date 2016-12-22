@@ -39,6 +39,7 @@ window.addEventListener('WebComponentsReady', () => {
     console.log("got stripe data back!")
     console.log("status", status)
     console.log("response", response)
+    app.ports.receiveToken.send(response.id)
   }
 
   function getAppDrawerLayout() {

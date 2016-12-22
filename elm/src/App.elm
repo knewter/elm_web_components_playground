@@ -1,11 +1,12 @@
 module App exposing (..)
 
 import Model exposing (Model)
-import Msg exposing (Msg)
+import Msg exposing (Msg(Billing), BillingMsg(ReceiveToken))
 import Routes exposing (parseRoute)
 import Navigation
 import UrlParser as Url
 import Date
+import Ports
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -21,4 +22,4 @@ init location =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Ports.receiveToken <| Billing << ReceiveToken

@@ -12,12 +12,14 @@ type Msg
     | NewUrl Route
     | SetDate Date
     | Billing BillingMsg
+    | NoOp
 
 
 type BillingMsg
     = CreditCard CreditCardMsg
     | AskForToken
     | ReceiveToken String
+    | SubscriptionCreated String
 
 
 type CreditCardMsg

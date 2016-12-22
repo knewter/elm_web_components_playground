@@ -20,7 +20,9 @@ defmodule Backend.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Backend do
-  #   pipe_through :api
-  # end
+  scope "/api", Backend do
+    pipe_through :api
+
+    resources "/subscriptions", SubscriptionsController, only: [:create]
+  end
 end

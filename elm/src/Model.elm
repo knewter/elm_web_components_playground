@@ -3,6 +3,8 @@ module Model
         ( Model
         , BillingModel
         , CreditCardModel
+        , NewSubscriptionModel
+        , SubscriptionModel
         , initialBillingModel
         , initialCreditCardModel
         )
@@ -22,6 +24,7 @@ type alias Model =
 type alias BillingModel =
     { token : Maybe String
     , creditCard : CreditCardModel
+    , subscription : Maybe SubscriptionModel
     }
 
 
@@ -34,10 +37,23 @@ type alias CreditCardModel =
     }
 
 
+type alias NewSubscriptionModel =
+    { email : String
+    , token : String
+    , plan : String
+    }
+
+
+type alias SubscriptionModel =
+    { id : String
+    }
+
+
 initialBillingModel : BillingModel
 initialBillingModel =
     { token = Nothing
     , creditCard = initialCreditCardModel
+    , suscription = Nothing
     }
 
 
