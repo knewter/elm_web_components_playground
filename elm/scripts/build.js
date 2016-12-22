@@ -3,6 +3,8 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
 
+process.env.NODE_ENV = 'production';
+
 if (pathExists.sync('elm-package.json') === false) {
   console.log('Please, run the build script from project root directory');
   process.exit(1);

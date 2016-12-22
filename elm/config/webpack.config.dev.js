@@ -2,6 +2,7 @@ const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const paths = require('../config/paths');
+const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -38,7 +39,10 @@ module.exports = {
   },
   resolve: {
     modulesDirectories: [ 'node_modules', 'bower_components' ],
-    extensions: [ '', '.js', '.elm', '.html' ]
+    extensions: [ '', '.js', '.elm', '.html' ],
+    alias: {
+      config: path.resolve('config/config.development')
+    },
   },
   module: {
     noParse: /\.elm$/,

@@ -1,3 +1,5 @@
+const config = require('config')
+
 // Load the webcomponentsjs polyfill
 require('script!../bower_components/webcomponentsjs/webcomponents.js')
 
@@ -25,7 +27,7 @@ window.addEventListener('WebComponentsReady', () => {
   })
 
   // Set our stripe publishable key - yours will be different!
-  Stripe.setPublishableKey('pk_test_ui9kge72Kvk3KHQnRYoRSPYf')
+  Stripe.setPublishableKey(config.stripe.publishableKey)
   app.ports.askForToken.subscribe((creditCardModel) => {
     Stripe.card.createToken({
       number: creditCardModel.ccNumber,
