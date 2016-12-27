@@ -1,19 +1,14 @@
 defmodule Backend do
+  @moduledoc false
   use Application
+  alias Backend.{Endpoint, Repo}
 
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
-  # for more information on OTP Applications
   def start(_type, _args) do
     import Supervisor.Spec
 
-    # Define workers and child supervisors to be supervised
     children = [
-      # Start the Ecto repository
-      supervisor(Backend.Repo, []),
-      # Start the endpoint when the application starts
-      supervisor(Backend.Endpoint, []),
-      # Start your own worker by calling: Backend.Worker.start_link(arg1, arg2, arg3)
-      # worker(Backend.Worker, [arg1, arg2, arg3]),
+      supervisor(Repo, []),
+      supervisor(Endpoint, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -22,10 +17,8 @@ defmodule Backend do
     Supervisor.start_link(children, opts)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    Backend.Endpoint.config_change(changed, removed)
+    Endpoint.config_change(changed, removed)
     :ok
   end
 end

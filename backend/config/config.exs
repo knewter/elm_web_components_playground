@@ -24,6 +24,18 @@ config :logger, :console,
 
 config :stripity_stripe, api_key: System.get_env("STRIPE_SECRET_KEY")
 
+config :guardian, Guardian,
+  allowed_algos: ["ES512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  verify_issuer: true, # optional
+  issuer: "Elm Web Components Backend",
+  ttl: { 30, :days },
+  #ttl: { 15, :seconds }, # Just an easy way to test api key expiration 'for realz'
+  secret_key: fn ->
+    JOSE.JWK.from_pem_file("ec-secp521r1.pem")
+  end,
+  serializer: Backend.GuardianSerializer
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

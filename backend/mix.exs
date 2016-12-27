@@ -53,6 +53,8 @@ defmodule Backend.Mixfile do
       {:cowboy, "~> 1.0"},
       {:stripity_stripe, "~> 2.0.0-alpha.5"},
       {:corsica, "~> 0.5"},
+      {:guardian, "~> 0.14.0"},
+      {:credo, "~> 0.5", only: [:dev, :test]}
     ]
   end
 

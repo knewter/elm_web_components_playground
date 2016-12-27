@@ -11,6 +11,8 @@ defmodule Backend.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", Backend do
@@ -24,5 +26,6 @@ defmodule Backend.Router do
     pipe_through :api
 
     resources "/subscriptions", SubscriptionsController, only: [:create]
+    resources "/users", UserController, except: [:new, :edit]
   end
 end
