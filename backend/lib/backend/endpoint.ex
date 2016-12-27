@@ -38,6 +38,16 @@ defmodule Backend.Endpoint do
     key: "_backend_key",
     signing_salt: "GHhC/OA1"
 
-  plug Corsica, origins: "*", allow_headers: ~w(content-type)
+  plug Corsica,
+    origins: "*",
+    allow_headers:
+      ~w(
+         content-type
+       ),
+    expose_headers:
+      ~w(
+         authorization
+       )
+
   plug Backend.Router
 end

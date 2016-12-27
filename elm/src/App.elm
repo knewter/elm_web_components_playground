@@ -15,6 +15,9 @@ init location =
       , elevation = 2
       , date = Date.fromTime 0
       , billing = Model.initialBillingModel
+      , users = Model.initialUsersModel
+      , login = Model.initialLoginModel
+      , apiKey = Nothing
       }
     , Cmd.none
     )

@@ -31,9 +31,7 @@ config :guardian, Guardian,
   issuer: "Elm Web Components Backend",
   ttl: { 30, :days },
   #ttl: { 15, :seconds }, # Just an easy way to test api key expiration 'for realz'
-  secret_key: fn ->
-    JOSE.JWK.from_pem_file("ec-secp521r1.pem")
-  end,
+  secret_key: {Backend.SecretKey, :fetch},
   serializer: Backend.GuardianSerializer
 
 # Import environment specific config. This must remain at the bottom

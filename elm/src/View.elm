@@ -18,6 +18,7 @@ import View.Cards
 import View.Home
 import View.Forms
 import View.DatePicker
+import View.Signup.CreateUser
 
 
 -- END VIEW MODULES
@@ -37,7 +38,8 @@ drawer model =
     let
         unauthenticatedLinks =
             [ Home
-            , Login
+            , Routes.Login
+            , NewUser
             , Cards
             , Forms
             , DatePicker
@@ -45,13 +47,14 @@ drawer model =
 
         authenticatedLinks =
             [ Home
+            , Routes.Logout
             , Cards
             , Forms
             , DatePicker
             ]
 
         links =
-            case model.billing.subscription of
+            case model.apiKey of
                 Nothing ->
                     unauthenticatedLinks
 
@@ -127,8 +130,14 @@ routeView model =
                 Home ->
                     View.Home.view model
 
-                Login ->
+                Routes.Login ->
                     View.Login.view model
+
+                Routes.Logout ->
+                    text "logging you out"
+
+                NewUser ->
+                    View.Signup.CreateUser.view model
 
                 Cards ->
                     View.Cards.view model

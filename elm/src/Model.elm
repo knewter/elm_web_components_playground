@@ -5,12 +5,36 @@ module Model
         , CreditCardModel
         , NewSubscriptionModel
         , SubscriptionModel
+        , LoginModel
+        , UsersModel
+        , NewUserModel
         , initialBillingModel
         , initialCreditCardModel
+        , initialUsersModel
+        , initialLoginModel
         )
 
 import Routes exposing (Route(..))
 import Date exposing (Date)
+
+
+type alias NewUserModel =
+    { name : String
+    , email : String
+    , password : String
+    , passwordConfirmation : String
+    }
+
+
+type alias UsersModel =
+    { newUser : NewUserModel
+    }
+
+
+type alias LoginModel =
+    { username : String
+    , password : String
+    }
 
 
 type alias Model =
@@ -18,6 +42,9 @@ type alias Model =
     , elevation : Int
     , date : Date
     , billing : BillingModel
+    , users : UsersModel
+    , login : LoginModel
+    , apiKey : Maybe String
     }
 
 
@@ -64,4 +91,26 @@ initialCreditCardModel =
     , cvc = ""
     , expiration = ""
     , zip = ""
+    }
+
+
+initialUsersModel : UsersModel
+initialUsersModel =
+    { newUser = initialNewUserModel
+    }
+
+
+initialNewUserModel : NewUserModel
+initialNewUserModel =
+    { name = ""
+    , email = ""
+    , password = ""
+    , passwordConfirmation = ""
+    }
+
+
+initialLoginModel : LoginModel
+initialLoginModel =
+    { username = ""
+    , password = ""
     }

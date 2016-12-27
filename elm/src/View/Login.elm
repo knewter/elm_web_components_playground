@@ -1,9 +1,32 @@
 module View.Login exposing (view)
 
-import Html exposing (Html, text, div, node, h2, p, br)
-import Html.Attributes exposing (attribute, style, class)
-import Html.Events exposing (onClick)
-import Msg exposing (Msg(NewUrl))
+import Html
+    exposing
+        ( Html
+        , text
+        , div
+        , node
+        , h2
+        , p
+        , br
+        )
+import Html.Attributes
+    exposing
+        ( attribute
+        , style
+        , class
+        , type_
+        )
+import Html.Events
+    exposing
+        ( onClick
+        , onInput
+        )
+import Msg
+    exposing
+        ( Msg(NewUrl, Login)
+        , LoginMsg(..)
+        )
 import Model exposing (Model)
 import Polymer.Paper as Paper
 import Polymer.Attributes exposing (label)
@@ -21,16 +44,23 @@ view model =
             [ div
                 [ class "card-content" ]
                 [ Paper.input
-                    [ label "Username" ]
+                    [ label "Username"
+                    , onInput <| Login << SetUsername
+                    ]
                     []
                 , Paper.input
-                    [ label "Password" ]
+                    [ label "Password"
+                    , type_ "password"
+                    , onInput <| Login << SetPassword
+                    ]
                     []
                 ]
             , div
                 [ class "card-actions" ]
                 [ Paper.button
-                    [ class "colored" ]
+                    [ class "colored"
+                    , onClick <| Login AttemptLogin
+                    ]
                     [ text "Login" ]
                 ]
             ]

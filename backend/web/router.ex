@@ -27,5 +27,6 @@ defmodule Backend.Router do
 
     resources "/subscriptions", SubscriptionsController, only: [:create]
     resources "/users", UserController, except: [:new, :edit]
+    post "/authenticate", AuthenticationController, :create
   end
 end

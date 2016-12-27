@@ -34,6 +34,6 @@ defmodule Backend.User do
       :password,
       :is_superuser,
     ])
-    |> unique_constraint(:name)
+    |> unique_constraint(:email)
   end
 end

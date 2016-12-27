@@ -1,4 +1,12 @@
-module Msg exposing (Msg(..), BillingMsg(..), CreditCardMsg(..))
+module Msg
+    exposing
+        ( Msg(..)
+        , UsersMsg(..)
+        , LoginMsg(..)
+        , NewUserMsg(..)
+        , BillingMsg(..)
+        , CreditCardMsg(..)
+        )
 
 import Navigation
 import Routes exposing (Route)
@@ -10,6 +18,9 @@ type Msg
     = Raise
     | Lower
     | UrlChange Navigation.Location
+    | Users UsersMsg
+    | Login LoginMsg
+    | BecomeAuthenticated String
     | NewUrl Route
     | SetDate Date
     | Billing BillingMsg
@@ -29,3 +40,21 @@ type CreditCardMsg
     | SetCvc String
     | SetExpiration String
     | SetZip String
+
+
+type UsersMsg
+    = NewUser NewUserMsg
+
+
+type LoginMsg
+    = SetUsername String
+    | SetPassword String
+    | AttemptLogin
+
+
+type NewUserMsg
+    = SetNewUserName String
+    | SetNewUserEmail String
+    | SetNewUserPassword String
+    | SetNewUserPasswordConfirmation String
+    | CreateNewUser

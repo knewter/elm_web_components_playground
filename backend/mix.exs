@@ -30,6 +30,7 @@ defmodule Backend.Mixfile do
         :postgrex,
         :stripity_stripe,
         :corsica,
+        :guardian,
       ]
     ]
   end
