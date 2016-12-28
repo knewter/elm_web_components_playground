@@ -1,18 +1,22 @@
 defmodule Backend.SubscriptionsController do
   use Backend.Web, :controller
-  alias Stripe.{Customer, Card, Subscription}
 
   def create(conn, %{"token" => token, "plan" => plan, "email" => email}) do
     # NOTE: I'm not under the impression that this is fantastically elegant code
     # :)
+    # TODO: Associate customer id with user
     {:ok, customer} =
-      Customer.create(%{
+      Stripe.Customer.create(%{
         email: email
       })
+
+    # TODO: Associate card id with user
     {:ok, card} =
-      Card.create(:customer, customer.id, token)
+      Stripe.Card.create(:customer, customer.id, token)
+
+    # TODO: Associate subscription id with user
     {:ok, subscription} =
-      Subscription.create(%{
+      Stripe.Subscription.create(%{
         customer: customer.id,
         plan: plan,
         quantity: 1,

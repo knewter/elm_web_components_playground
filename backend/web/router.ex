@@ -9,10 +9,16 @@ defmodule Backend.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
+  pipeline :api_protected do
     plug :accepts, ["json"]
     plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.EnsureAuthenticated, handler: Backend.AuthErrorHandler
     plug Guardian.Plug.LoadResource
+    plug Guardian.Plug.EnsureResource
+  end
+
+  pipeline :api_public do
+    plug :accepts, ["json"]
   end
 
   scope "/", Backend do
@@ -23,9 +29,14 @@ defmodule Backend.Router do
 
   # Other scopes may use custom stacks.
   scope "/api", Backend do
-    pipe_through :api
+    pipe_through :api_protected
 
     resources "/subscriptions", SubscriptionsController, only: [:create]
+  end
+
+  scope "/api", Backend do
+    pipe_through :api_public
+
     resources "/users", UserController, except: [:new, :edit]
     post "/authenticate", AuthenticationController, :create
   end

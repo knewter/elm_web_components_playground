@@ -9,7 +9,7 @@ defmodule Backend.AuthenticationController do
            |> Guardian.Plug.api_sign_in(user)
            |> add_jwt_header()
            |> put_status(200)
-           |> text ""
+           |> text("")
       {:error, reason} ->
         conn
           |> put_status(401)
