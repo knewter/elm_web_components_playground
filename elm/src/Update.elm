@@ -9,6 +9,7 @@ import Model
         , UsersModel
         , LoginModel
         , NewUserModel
+        , CurrentUserModel
         )
 import Msg
     exposing
@@ -63,9 +64,35 @@ update msg model =
         Billing billingMsg ->
             let
                 ( billingModel, billingCmd ) =
-                    updateBilling billingMsg model.billing
+                    updateBilling model.apiKey billingMsg model.billing
+
+                newModel =
+                    case billingMsg of
+                        SubscriptionCreated subscription ->
+                            let
+                                users =
+                                    model.users
+
+                                currentUser =
+                                    users.currentUser
+
+                                newCurrentUser =
+                                    case currentUser of
+                                        Just user ->
+                                            Just { user | hasSubscription = True }
+
+                                        Nothing ->
+                                            Nothing
+
+                                newUsers =
+                                    { users | currentUser = newCurrentUser }
+                            in
+                                { model | users = newUsers }
+
+                        _ ->
+                            model
             in
-                ( { model | billing = billingModel }
+                ( { newModel | billing = billingModel }
                 , billingCmd
                 )
 
@@ -87,16 +114,28 @@ update msg model =
                 , loginCmd
                 )
 
-        BecomeAuthenticated apiKey ->
-            { model | apiKey = Just apiKey }
-                |> update (NewUrl Routes.Home)
+        BecomeAuthenticated apiKey currentUser ->
+            let
+                ( usersModel, _ ) =
+                    updateUsers (SetCurrentUser currentUser) model.users
+
+                newUrl =
+                    case currentUser.hasSubscription of
+                        False ->
+                            Routes.Forms
+
+                        True ->
+                            Routes.Home
+            in
+                { model | apiKey = Just apiKey, users = usersModel }
+                    |> update (NewUrl newUrl)
 
         NoOp ->
             ( model, Cmd.none )
 
 
-updateBilling : BillingMsg -> BillingModel -> ( BillingModel, Cmd Msg )
-updateBilling msg model =
+updateBilling : Maybe String -> BillingMsg -> BillingModel -> ( BillingModel, Cmd Msg )
+updateBilling apiKey msg model =
     case msg of
         CreditCard creditCardMsg ->
             ( { model
@@ -116,7 +155,7 @@ updateBilling msg model =
                 | token = Just token
                 , creditCard = Model.initialCreditCardModel
               }
-            , Api.createSubscription
+            , Api.createSubscription apiKey
                 { email = "foo@example.com"
                 , token = token
                 , plan = "basic"
@@ -159,6 +198,11 @@ updateUsers usersMsg usersModel =
                 ( { usersModel | newUser = newUser }
                 , newUserCmd
                 )
+
+        SetCurrentUser currentUser ->
+            ( { usersModel | currentUser = Just currentUser }
+            , Cmd.none
+            )
 
 
 updateLogin : LoginMsg -> LoginModel -> ( LoginModel, Cmd Msg )

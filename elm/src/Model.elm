@@ -8,6 +8,7 @@ module Model
         , LoginModel
         , UsersModel
         , NewUserModel
+        , CurrentUserModel
         , initialBillingModel
         , initialCreditCardModel
         , initialUsersModel
@@ -28,6 +29,13 @@ type alias NewUserModel =
 
 type alias UsersModel =
     { newUser : NewUserModel
+    , currentUser : Maybe CurrentUserModel
+    }
+
+
+type alias CurrentUserModel =
+    { username : String
+    , hasSubscription : Bool
     }
 
 
@@ -97,6 +105,7 @@ initialCreditCardModel =
 initialUsersModel : UsersModel
 initialUsersModel =
     { newUser = initialNewUserModel
+    , currentUser = Nothing
     }
 
 

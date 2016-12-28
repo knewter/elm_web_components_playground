@@ -11,7 +11,7 @@ module Msg
 import Navigation
 import Routes exposing (Route)
 import Date exposing (Date)
-import Model exposing (SubscriptionModel)
+import Model exposing (SubscriptionModel, CurrentUserModel)
 
 
 type Msg
@@ -20,7 +20,7 @@ type Msg
     | UrlChange Navigation.Location
     | Users UsersMsg
     | Login LoginMsg
-    | BecomeAuthenticated String
+    | BecomeAuthenticated String CurrentUserModel
     | NewUrl Route
     | SetDate Date
     | Billing BillingMsg
@@ -44,6 +44,7 @@ type CreditCardMsg
 
 type UsersMsg
     = NewUser NewUserMsg
+    | SetCurrentUser CurrentUserModel
 
 
 type LoginMsg

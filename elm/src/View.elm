@@ -40,26 +40,33 @@ drawer model =
             [ Home
             , Routes.Login
             , NewUser
-            , Cards
-            , Forms
-            , DatePicker
             ]
 
         authenticatedLinks =
             [ Home
+            , Forms
+            , Routes.Logout
+            ]
+
+        subscribedLinks =
+            [ Home
             , Routes.Logout
             , Cards
-            , Forms
             , DatePicker
             ]
 
         links =
-            case model.apiKey of
+            case model.users.currentUser of
                 Nothing ->
                     unauthenticatedLinks
 
-                Just _ ->
-                    authenticatedLinks
+                Just currentUser ->
+                    case currentUser.hasSubscription of
+                        True ->
+                            subscribedLinks
+
+                        False ->
+                            authenticatedLinks
 
         selected =
             links
