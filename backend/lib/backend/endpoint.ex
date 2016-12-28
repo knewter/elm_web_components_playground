@@ -42,6 +42,7 @@ defmodule Backend.Endpoint do
     origins: "*",
     allow_headers:
       ~w(
+         authorization
          content-type
        ),
     expose_headers:

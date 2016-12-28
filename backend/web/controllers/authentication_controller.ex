@@ -1,6 +1,6 @@
 defmodule Backend.AuthenticationController do
   use Backend.Web, :controller
-  alias Backend.{User, Services.Authentication}
+  alias Backend.{User, UserView, Services.Authentication}
 
   def create(conn, %{"email" => email, "password" => password}) do
     case Authentication.find_and_confirm_password(email, password) do
@@ -9,7 +9,7 @@ defmodule Backend.AuthenticationController do
            |> Guardian.Plug.api_sign_in(user)
            |> add_jwt_header()
            |> put_status(200)
-           |> text("")
+           |> render(UserView, "show.json", user: user)
       {:error, reason} ->
         conn
           |> put_status(401)
