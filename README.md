@@ -13,7 +13,7 @@ You can [try out a demo here](https://knewter.github.io/elm_web_components_playg
 
 ### About DailyDrip
 
-[![DailyDrip](src/static/dailydrip.png)](http://www.dailydrip.com)
+[![DailyDrip](elm/src/static/dailydrip.png)](http://www.dailydrip.com)
 
 > This code is part of [Elm Drips](https://www.dailydrip.com/topics/elm/), a
 > daily continous learning website where you can just spend 5 minutes a day to
