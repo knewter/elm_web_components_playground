@@ -24,7 +24,6 @@ view model =
             , attribute "elevation" "2"
             ]
             (cardContent model)
-        , nextCard model
         ]
 
 
@@ -111,21 +110,5 @@ cardFormContent model =
             [ Paper.button
                 [ onClick <| Billing <| AskForToken ]
                 [ text "Submit" ]
-            ]
-        ]
-
-
-nextCard : Model -> Html Msg
-nextCard model =
-    Paper.card
-        [ attribute "elevation" "2" ]
-        [ p
-            [ class "card-content" ]
-            [ text "Neat, what else do you have?" ]
-        , div
-            [ class "card-actions" ]
-            [ Paper.button
-                [ onClick <| NewUrl DatePicker ]
-                [ text "Next" ]
             ]
         ]

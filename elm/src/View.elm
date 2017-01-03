@@ -9,6 +9,7 @@ import Model exposing (Model)
 import Msg exposing (Msg(..))
 import Routes exposing (Route(..))
 import List.Extra
+import Helpers exposing (isAuthenticated)
 
 
 -- VIEW MODULES
@@ -26,10 +27,30 @@ import View.Signup.CreateUser
 
 view : Model -> Html Msg
 view model =
+    case isAuthenticated model of
+        True ->
+            authenticatedView model
+
+        False ->
+            unauthenticatedView model
+
+
+authenticatedView : Model -> Html Msg
+authenticatedView model =
     App.drawerLayout
         []
         [ drawer model
         , body model
+        ]
+
+
+unauthenticatedView : Model -> Html Msg
+unauthenticatedView model =
+    div
+        [ style [ ( "padding", "1em" ) ] ]
+        [ div
+            [ style [ ( "width", "66%" ), ( "margin", "0 auto" ) ] ]
+            [ routeView model ]
         ]
 
 

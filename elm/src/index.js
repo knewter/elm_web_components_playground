@@ -21,8 +21,10 @@ window.addEventListener('WebComponentsReady', () => {
   let app = Elm.Main.embed(root)
 
   app.ports.closeDrawer.subscribe(() => {
-    if(!getAppDrawer().persistent){
-      getAppDrawer().close()
+    if(getAppDrawer()){
+      if(!getAppDrawer().persistent){
+        getAppDrawer().close()
+      }
     }
   })
 
@@ -49,6 +51,8 @@ window.addEventListener('WebComponentsReady', () => {
   }
 
   function getAppDrawer() {
-    return getAppDrawerLayout().drawer
+    if(getAppDrawerLayout()){
+      return getAppDrawerLayout().drawer
+    }
   }
 })

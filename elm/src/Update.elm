@@ -48,7 +48,10 @@ update msg model =
         NewUrl route ->
             case route of
                 Routes.Logout ->
-                    { model | apiKey = Nothing }
+                    { model
+                        | apiKey = Nothing
+                        , users = Model.initialUsersModel
+                    }
                         |> update (NewUrl Routes.Login)
 
                 _ ->

@@ -8,6 +8,7 @@ import Model exposing (Model)
 import Polymer.Paper as Paper
 import Markdown
 import Routes exposing (Route(Login))
+import Helpers exposing (isAuthenticated)
 
 
 view : Model -> Html Msg
@@ -27,6 +28,14 @@ view model =
                     div
                         [ class "card-content" ]
                         [ text <| "Subscription: " ++ (toString subscription) ]
+
+        buttonText =
+            case isAuthenticated model of
+                True ->
+                    "Next"
+
+                False ->
+                    "Login"
     in
         Paper.card
             [ class "view-home"
@@ -38,7 +47,7 @@ view model =
                 [ class "card-actions" ]
                 [ Paper.button
                     [ onClick <| NewUrl Login ]
-                    [ text "Next" ]
+                    [ text buttonText ]
                 ]
             ]
 

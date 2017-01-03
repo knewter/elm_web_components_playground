@@ -64,14 +64,4 @@ view model =
                     [ text "Login" ]
                 ]
             ]
-        , Paper.card
-            [ attribute "elevation" "2" ]
-            [ p [ class "card-content" ] [ text "Neat, what else do you have?" ]
-            , div
-                [ class "card-actions" ]
-                [ Paper.button
-                    [ onClick <| NewUrl Cards ]
-                    [ text "Next" ]
-                ]
-            ]
         ]
