@@ -9,14 +9,18 @@ module Model
         , UsersModel
         , NewUserModel
         , CurrentUserModel
+        , NewUploadModel
+        , NewPhotoModel
         , initialBillingModel
         , initialCreditCardModel
         , initialUsersModel
         , initialLoginModel
+        , initialNewPhotoModel
         )
 
 import Routes exposing (Route(..))
 import Date exposing (Date)
+import FileReader exposing (NativeFile)
 
 
 type alias NewUserModel =
@@ -53,6 +57,7 @@ type alias Model =
     , users : UsersModel
     , login : LoginModel
     , apiKey : Maybe String
+    , newPhoto : NewPhotoModel
     }
 
 
@@ -76,6 +81,19 @@ type alias NewSubscriptionModel =
     { email : String
     , token : String
     , plan : String
+    }
+
+
+type alias NewPhotoModel =
+    { newUpload : Maybe NewUploadModel
+    , dataUrl : Maybe String
+    }
+
+
+type alias NewUploadModel =
+    { filename : String
+    , mimetype : String
+    , nativeFile : NativeFile
     }
 
 
@@ -122,4 +140,11 @@ initialLoginModel : LoginModel
 initialLoginModel =
     { username = ""
     , password = ""
+    }
+
+
+initialNewPhotoModel : NewPhotoModel
+initialNewPhotoModel =
+    { newUpload = Nothing
+    , dataUrl = Nothing
     }

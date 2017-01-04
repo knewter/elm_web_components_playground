@@ -6,12 +6,15 @@ module Msg
         , NewUserMsg(..)
         , BillingMsg(..)
         , CreditCardMsg(..)
+        , NewPhotoMsg(..)
         )
 
 import Navigation
 import Routes exposing (Route)
 import Date exposing (Date)
 import Model exposing (SubscriptionModel, CurrentUserModel)
+import FileReader exposing (NativeFile)
+import Json.Decode as Decode
 
 
 type Msg
@@ -24,7 +27,13 @@ type Msg
     | NewUrl Route
     | SetDate Date
     | Billing BillingMsg
+    | NewPhoto NewPhotoMsg
     | NoOp
+
+
+type NewPhotoMsg
+    = SetNewPhoto (List NativeFile)
+    | ReceivedNewPhotoAsDataUrl Decode.Value
 
 
 type BillingMsg

@@ -18,6 +18,7 @@ init location =
       , users = Model.initialUsersModel
       , login = Model.initialLoginModel
       , apiKey = Nothing
+      , newPhoto = Model.initialNewPhotoModel
       }
     , Cmd.none
     )

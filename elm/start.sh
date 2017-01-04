@@ -1,6 +1,6 @@
 #!/bin/bash
 
-elm package install -y && \
+elm-github-install && \
   npm install && \
   bower install && \
   npm run start

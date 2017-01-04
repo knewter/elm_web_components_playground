@@ -10,6 +10,8 @@ import Model
         , LoginModel
         , NewUserModel
         , CurrentUserModel
+        , NewPhotoModel
+        , NewUploadModel
         )
 import Msg
     exposing
@@ -19,12 +21,17 @@ import Msg
         , LoginMsg(..)
         , BillingMsg(..)
         , CreditCardMsg(..)
+        , NewPhotoMsg(..)
         )
 import Routes exposing (parseRoute)
 import UrlParser as Url
 import Navigation
 import Ports
 import Api
+import Json.Decode as Decode
+import FileReader exposing (readAsDataUrl)
+import Task
+import MimeType
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -133,8 +140,67 @@ update msg model =
                 { model | apiKey = Just apiKey, users = usersModel }
                     |> update (NewUrl newUrl)
 
+        NewPhoto newPhotoMsg ->
+            let
+                ( newPhotoModel, newPhotoCmd ) =
+                    updateNewPhoto model.apiKey newPhotoMsg model.newPhoto
+            in
+                ( { model | newPhoto = newPhotoModel }
+                , newPhotoCmd
+                )
+
         NoOp ->
             ( model, Cmd.none )
+
+
+updateNewPhoto : Maybe String -> NewPhotoMsg -> NewPhotoModel -> ( NewPhotoModel, Cmd Msg )
+updateNewPhoto apiKey newPhotoMsg newPhotoModel =
+    case newPhotoMsg of
+        SetNewPhoto nativeFiles ->
+            let
+                handleDataUrl result =
+                    case result of
+                        Err err ->
+                            NoOp
+
+                        Ok dataUrl ->
+                            NewPhoto <| ReceivedNewPhotoAsDataUrl dataUrl
+
+                maybeNativeFile =
+                    List.head nativeFiles
+            in
+                case maybeNativeFile of
+                    Nothing ->
+                        { newPhotoModel | newUpload = Nothing } ! []
+
+                    Just nativeFile ->
+                        let
+                            _ =
+                                Debug.log "nativeFile" nativeFile
+
+                            newUpload =
+                                NewUploadModel
+                                    nativeFile.name
+                                    (Maybe.withDefault ""
+                                        (Maybe.map
+                                            MimeType.toString
+                                            nativeFile.mimeType
+                                        )
+                                    )
+                                    nativeFile
+                        in
+                            ( { newPhotoModel | newUpload = Just newUpload }
+                            , readAsDataUrl nativeFile.blob
+                                |> Task.attempt handleDataUrl
+                            )
+
+        ReceivedNewPhotoAsDataUrl value ->
+            let
+                dataUrl =
+                    Decode.decodeValue Decode.string value
+                        |> Result.toMaybe
+            in
+                { newPhotoModel | dataUrl = dataUrl } ! []
 
 
 updateBilling : Maybe String -> BillingMsg -> BillingModel -> ( BillingModel, Cmd Msg )
