@@ -39,5 +39,6 @@ defmodule Backend.Router do
 
     resources "/users", UserController, except: [:new, :edit]
     post "/authenticate", AuthenticationController, :create
+    resources "/upload_signatures", UploadSignatureController, only: [:create]
   end
 end

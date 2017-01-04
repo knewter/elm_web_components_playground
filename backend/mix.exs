@@ -31,6 +31,7 @@ defmodule Backend.Mixfile do
         :stripity_stripe,
         :corsica,
         :guardian,
+        :timex
       ]
     ]
   end
@@ -55,7 +56,8 @@ defmodule Backend.Mixfile do
       {:stripity_stripe, "~> 2.0.0-alpha.5"},
       {:corsica, "~> 0.5"},
       {:guardian, "~> 0.14.0"},
-      {:credo, "~> 0.5", only: [:dev, :test]}
+      {:timex, "~> 3.1"},
+      {:credo, "~> 0.5", only: [:dev, :test]},
     ]
   end
 

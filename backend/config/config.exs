@@ -34,6 +34,12 @@ config :guardian, Guardian,
   secret_key: {Backend.SecretKey, :fetch},
   serializer: Backend.GuardianSerializer
 
+config :backend, :aws,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  bucket_name: "s3directupload-elixirsips"
+
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
