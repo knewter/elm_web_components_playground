@@ -37,7 +37,8 @@ config :guardian, Guardian,
 config :backend, :aws,
   access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
   secret_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
-  bucket_name: "s3directupload-elixirsips"
+  bucket_name: "s3directupload-elixirsips",
+  region: "us-west-2"
 
 
 # Import environment specific config. This must remain at the bottom
