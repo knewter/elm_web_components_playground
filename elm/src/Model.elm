@@ -11,6 +11,7 @@ module Model
         , CurrentUserModel
         , NewUploadModel
         , NewPhotoModel
+        , UploadSignatureModel
         , initialBillingModel
         , initialCreditCardModel
         , initialUsersModel
@@ -87,6 +88,20 @@ type alias NewSubscriptionModel =
 type alias NewPhotoModel =
     { newUpload : Maybe NewUploadModel
     , dataUrl : Maybe String
+    }
+
+
+type alias UploadSignatureModel =
+    { key : String
+    , date : String
+    , content_type : String
+    , acl : String
+    , success_action_status : String
+    , action : String
+    , aws_access_key_id : String
+    , credential : String
+    , policy : String
+    , signature : String
     }
 
 

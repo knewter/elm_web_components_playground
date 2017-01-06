@@ -34,6 +34,22 @@ type Msg
 type NewPhotoMsg
     = SetNewPhoto (List NativeFile)
     | ReceivedNewPhotoAsDataUrl Decode.Value
+    | RequestUploadSignature
+    | ReceiveUploadSignature UploadSignatureModel
+
+
+type alias UploadSignatureModel =
+    { key : String
+    , date : String
+    , content_type : String
+    , acl : String
+    , success_action_status : String
+    , action : String
+    , aws_access_key_id : String
+    , credential : String
+    , policy : String
+    , signature : String
+    }
 
 
 type BillingMsg

@@ -20,8 +20,15 @@ import Html.Attributes
         , accept
         )
 import Html.Events exposing (onClick, on)
-import Msg exposing (Msg(Raise, Lower, NewUrl), NewPhotoMsg(SetNewPhoto))
-import Model exposing (Model)
+import Model exposing (Model, UploadSignatureModel)
+import Msg
+    exposing
+        ( Msg(Raise, Lower, NewUrl)
+        , NewPhotoMsg
+            ( SetNewPhoto
+            , RequestUploadSignature
+            )
+        )
 import Polymer.Paper as Paper
 import Routes exposing (Route(Forms))
 import Json.Decode as Decode
@@ -69,7 +76,10 @@ view model =
                     ]
                 , div
                     [ class "card-actions" ]
-                    [ Paper.button [ onClick Lower ] [ text "Lower" ]
+                    [ Paper.button
+                        [ onClick <| Msg.NewPhoto RequestUploadSignature ]
+                        [ text "Save" ]
+                    , Paper.button [ onClick Lower ] [ text "Lower" ]
                     , Paper.button [ onClick Raise ] [ text "Raise" ]
                     ]
                 ]

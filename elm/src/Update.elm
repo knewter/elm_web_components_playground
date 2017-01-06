@@ -202,6 +202,39 @@ updateNewPhoto apiKey newPhotoMsg newPhotoModel =
             in
                 { newPhotoModel | dataUrl = dataUrl } ! []
 
+        RequestUploadSignature ->
+            case newPhotoModel.newUpload of
+                Nothing ->
+                    let
+                        _ =
+                            Debug.log "RequestUploadSignature but no upload data" True
+                    in
+                        newPhotoModel ! []
+
+                Just newUpload ->
+                    newPhotoModel
+                        ! [ Api.createUploadSignature
+                                (Maybe.withDefault "" apiKey)
+                                newUpload
+                          ]
+
+        ReceiveUploadSignature uploadSignature ->
+            case newPhotoModel.newUpload of
+                Nothing ->
+                    let
+                        _ =
+                            Debug.log "ReceiveUploadSignature" "No newUpload"
+                    in
+                        newPhotoModel ! []
+
+                Just newUpload ->
+                    let
+                        _ =
+                            Debug.log "ReceiveUploadSignature" uploadSignature
+                    in
+                        newPhotoModel
+                            ! []
+
 
 updateBilling : Maybe String -> BillingMsg -> BillingModel -> ( BillingModel, Cmd Msg )
 updateBilling apiKey msg model =

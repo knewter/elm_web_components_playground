@@ -1,4 +1,10 @@
-module Api exposing (createSubscription, login, createNewUser)
+module Api
+    exposing
+        ( createSubscription
+        , login
+        , createNewUser
+        , createUploadSignature
+        )
 
 import Http exposing (Response)
 import HttpBuilder exposing (..)
@@ -8,14 +14,18 @@ import Model
         , LoginModel
         , NewUserModel
         , CurrentUserModel
+        , UploadSignatureModel
+        , NewUploadModel
         )
 import Msg
     exposing
-        ( Msg(NoOp, Billing, BecomeAuthenticated)
+        ( Msg(NoOp, Billing, BecomeAuthenticated, NewPhoto)
         , BillingMsg(SubscriptionCreated)
+        , NewPhotoMsg(ReceiveUploadSignature, RequestUploadSignature)
         )
 import Time
-import Json.Decode as Decode
+import Json.Decode as Decode exposing (Decoder, string)
+import Json.Decode.Pipeline exposing (decode, required)
 import Json.Encode as Encode
 import Encoders exposing (newUserEncoder, loginEncoder)
 import Dict
@@ -49,6 +59,16 @@ createNewUser newUser =
         |> send handleLoginComplete
 
 
+createUploadSignature : String -> NewUploadModel -> Cmd Msg
+createUploadSignature apiKey newUpload =
+    post (apiUrl "upload_signatures")
+        |> withHeader "authorization" ("Bearer " ++ apiKey)
+        |> withJsonBody (newUploadEncoder newUpload)
+        |> withTimeout (10 * Time.second)
+        |> withExpect (Http.expectJson <| uploadSignatureDecoder)
+        |> send handleCreateUploadSignatureComplete
+
+
 createSubscription : Maybe String -> NewSubscriptionModel -> Cmd Msg
 createSubscription apiKey subscription =
     post (apiUrl "subscriptions")
@@ -69,6 +89,20 @@ handleCreateSubscriptionComplete result =
             let
                 _ =
                     Debug.log "error creating subscription" errorString
+            in
+                NoOp
+
+
+handleCreateUploadSignatureComplete : Result Http.Error UploadSignatureModel -> Msg
+handleCreateUploadSignatureComplete result =
+    case result of
+        Ok uploadSignature ->
+            NewPhoto <| ReceiveUploadSignature uploadSignature
+
+        Err errorString ->
+            let
+                _ =
+                    Debug.log "error creating upload signature" errorString
             in
                 NoOp
 
@@ -119,7 +153,7 @@ decodeApiKeyAndUser { headers, status, body } =
                 |> Result.fromMaybe "Couldn't find authorization header."
 
         decodedCurrentUser =
-            Decode.decodeString decodeCurrentUser body
+            Decode.decodeString (dataDecoder decodeCurrentUser) body
     in
         case decodedCurrentUser of
             Err err ->
@@ -144,7 +178,34 @@ decodeApiKeyAndUser { headers, status, body } =
 
 decodeCurrentUser : Decode.Decoder CurrentUserModel
 decodeCurrentUser =
-    Decode.field "data" <|
-        Decode.map2 CurrentUserModel
-            (Decode.field "username" Decode.string)
-            (Decode.succeed False)
+    Decode.map2 CurrentUserModel
+        (Decode.field "username" Decode.string)
+        (Decode.succeed False)
+
+
+uploadSignatureDecoder : Decoder UploadSignatureModel
+uploadSignatureDecoder =
+    decode UploadSignatureModel
+        |> required "key" string
+        |> required "date" string
+        |> required "content_type" string
+        |> required "acl" string
+        |> required "success_action_status" string
+        |> required "action" string
+        |> required "aws_access_key_id" string
+        |> required "credential" string
+        |> required "policy" string
+        |> required "signature" string
+
+
+newUploadEncoder : NewUploadModel -> Encode.Value
+newUploadEncoder newUpload =
+    Encode.object
+        [ ( "filename", Encode.string newUpload.filename )
+        , ( "mimetype", Encode.string newUpload.mimetype )
+        ]
+
+
+dataDecoder : Decoder a -> Decoder a
+dataDecoder decoder =
+    Decode.field "data" decoder
