@@ -32,6 +32,7 @@ import Json.Decode as Decode
 import FileReader exposing (readAsDataUrl)
 import Task
 import MimeType
+import S3
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -237,7 +238,10 @@ updateNewPhoto apiKey newPhotoMsg newPhotoModel =
                             Debug.log "ReceiveUploadSignature" uploadSignature
                     in
                         newPhotoModel
-                            ! []
+                            ! [ S3.uploadFile
+                                    uploadSignature
+                                    newUpload.nativeFile
+                              ]
 
 
 updateBilling : Maybe String -> BillingMsg -> BillingModel -> ( BillingModel, Cmd Msg )
