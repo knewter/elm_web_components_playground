@@ -88,6 +88,9 @@ defmodule Backend.UploadSignatureController do
   end
 
   defp bucket_url() do
-    "https://s3-#{region()}.amazonaws.com/#{bucket_name()}"
+    case region() do
+      "us-east-1" -> "https://s3.amazonaws.com/#{bucket_name()}"
+      reg -> "https://s3-#{reg}.amazonaws.com/#{bucket_name()}"
+    end
   end
 end
