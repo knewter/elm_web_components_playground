@@ -1,7 +1,7 @@
 module App exposing (..)
 
 import Model exposing (Model)
-import Msg exposing (Msg(Billing), BillingMsg(ReceiveToken))
+import Msg exposing (Msg(Billing, BecomeAuthenticated), BillingMsg(ReceiveToken))
 import Routes exposing (parseRoute)
 import Navigation
 import UrlParser as Url
@@ -26,4 +26,11 @@ init location =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Ports.receiveToken <| Billing << ReceiveToken
+    Sub.batch
+        [ Ports.receiveStripeToken <| Billing << ReceiveToken
+        , Ports.receiveApiKey <|
+            (\apiKey ->
+                BecomeAuthenticated apiKey
+                    { username = "knewter", hasSubscription = True }
+            )
+        ]

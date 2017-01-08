@@ -12,6 +12,8 @@ window.Polymer = {
 // Require your main webcomponent file (that can be just a file filled with html imports, custom styles or whatever)
 require('vulcanize?es6=false&base=./!./imports.html')
 
+import Storage from './js/Storage'
+
 // Require our styles
 require('./main.css')
 
@@ -28,9 +30,19 @@ window.addEventListener('WebComponentsReady', () => {
     }
   })
 
+  app.ports.storeApiKey.subscribe((apiKey) => {
+    console.log('storeApiKey', apiKey)
+    Storage.set('apiKey', apiKey)
+  })
+
+  let storedApiKey = Storage.get('apiKey')
+  if(storedApiKey){
+    app.ports.receiveApiKey.send(storedApiKey)
+  }
+
   // Set our stripe publishable key - yours will be different!
   Stripe.setPublishableKey(config.stripe.publishableKey)
-  app.ports.askForToken.subscribe((creditCardModel) => {
+  app.ports.askForStripeToken.subscribe((creditCardModel) => {
     Stripe.card.createToken({
       number: creditCardModel.ccNumber,
       cvc: creditCardModel.cvc,
@@ -43,7 +55,7 @@ window.addEventListener('WebComponentsReady', () => {
     console.log("got stripe data back!")
     console.log("status", status)
     console.log("response", response)
-    app.ports.receiveToken.send(response.id)
+    app.ports.receiveStripeToken.send(response.id)
   }
 
   function getAppDrawerLayout() {

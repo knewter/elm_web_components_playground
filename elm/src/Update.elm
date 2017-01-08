@@ -137,8 +137,12 @@ update msg model =
                         True ->
                             Routes.Home
             in
-                { model | apiKey = Just apiKey, users = usersModel }
-                    |> update (NewUrl newUrl)
+                ( { model | apiKey = Just apiKey, users = usersModel }
+                , Cmd.batch
+                    [ Navigation.newUrl <| "/#" ++ Routes.toString newUrl
+                    , Ports.storeApiKey apiKey
+                    ]
+                )
 
         NewPhoto newPhotoMsg ->
             let
@@ -249,7 +253,7 @@ updateBilling apiKey msg model =
 
         AskForToken ->
             ( model
-            , Ports.askForToken model.creditCard
+            , Ports.askForStripeToken model.creditCard
             )
 
         ReceiveToken token ->
