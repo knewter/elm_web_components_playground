@@ -29,7 +29,7 @@ config :guardian, Guardian,
   verify_module: Guardian.JWT,  # optional
   verify_issuer: true, # optional
   issuer: "Elm Web Components Backend",
-  ttl: { 30, :days },
+  ttl: {30, :days},
   #ttl: { 15, :seconds }, # Just an easy way to test api key expiration 'for realz'
   secret_key: {Backend.SecretKey, :fetch},
   serializer: Backend.GuardianSerializer
@@ -38,7 +38,7 @@ config :backend, :aws,
   access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
   secret_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
   bucket_name: "s3directupload-elixirsips",
-  region: "us-west-2"
+  region: "us-east-1"
 
 
 # Import environment specific config. This must remain at the bottom
