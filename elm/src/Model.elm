@@ -22,6 +22,7 @@ module Model
 import Routes exposing (Route(..))
 import Date exposing (Date)
 import FileReader exposing (NativeFile)
+import Dict exposing (Dict)
 
 
 type alias NewUserModel =
@@ -59,6 +60,7 @@ type alias Model =
     , login : LoginModel
     , apiKey : Maybe String
     , newPhoto : NewPhotoModel
+    , photos : Dict Int NewPhotoModel
     }
 
 

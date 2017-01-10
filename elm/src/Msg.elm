@@ -7,6 +7,7 @@ module Msg
         , BillingMsg(..)
         , CreditCardMsg(..)
         , NewPhotoMsg(..)
+        , PhotosMsg(..)
         )
 
 import Navigation
@@ -28,6 +29,7 @@ type Msg
     | SetDate Date
     | Billing BillingMsg
     | NewPhoto NewPhotoMsg
+    | Photos PhotosMsg
     | NoOp
 
 
@@ -36,6 +38,13 @@ type NewPhotoMsg
     | ReceivedNewPhotoAsDataUrl Decode.Value
     | RequestUploadSignature
     | ReceiveUploadSignature UploadSignatureModel
+
+
+type PhotosMsg
+    = SetPhotos (List NativeFile)
+    | ReceivedPhotoAsDataUrl Int Decode.Value
+    | RequestPhotoUploadSignatures
+    | ReceivePhotoUploadSignature Int UploadSignatureModel
 
 
 type alias UploadSignatureModel =

@@ -22,6 +22,7 @@ import Msg
         , BillingMsg(..)
         , CreditCardMsg(..)
         , NewPhotoMsg(..)
+        , PhotosMsg(..)
         )
 import Routes exposing (parseRoute)
 import UrlParser as Url
@@ -33,6 +34,7 @@ import FileReader exposing (readAsDataUrl)
 import Task
 import MimeType
 import S3
+import Dict exposing (Dict)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -154,8 +156,139 @@ update msg model =
                 , newPhotoCmd
                 )
 
+        Photos photosMsg ->
+            let
+                ( photosModel, photosCmd ) =
+                    updatePhotos model.apiKey photosMsg model.photos
+            in
+                ( { model | photos = photosModel }
+                , photosCmd
+                )
+
         NoOp ->
             ( model, Cmd.none )
+
+
+updatePhotos : Maybe String -> PhotosMsg -> Dict Int NewPhotoModel -> ( Dict Int NewPhotoModel, Cmd Msg )
+updatePhotos apiKey photosMsg photosModel =
+    case photosMsg of
+        SetPhotos nativeFiles ->
+            let
+                handleDataUrl key result =
+                    result
+                        |> Result.map (Photos << ReceivedPhotoAsDataUrl key)
+                        |> Result.withDefault NoOp
+
+                newUpload nativeFile =
+                    NewUploadModel
+                        nativeFile.name
+                        (Maybe.withDefault ""
+                            (Maybe.map
+                                MimeType.toString
+                                nativeFile.mimeType
+                            )
+                        )
+                        nativeFile
+
+                newPhoto key nativeFile =
+                    ( key
+                    , { newUpload = Just (newUpload nativeFile)
+                      , dataUrl = Nothing
+                      }
+                    )
+
+                newPhotos =
+                    nativeFiles
+                        |> List.indexedMap newPhoto
+                        |> Dict.fromList
+
+                readFileDataUrls =
+                    nativeFiles
+                        |> List.indexedMap
+                            (\key val ->
+                                readAsDataUrl val.blob
+                                    |> Task.attempt (handleDataUrl key)
+                            )
+            in
+                ( newPhotos
+                , Cmd.batch readFileDataUrls
+                )
+
+        ReceivedPhotoAsDataUrl key value ->
+            let
+                dataUrl =
+                    Decode.decodeValue Decode.string value
+                        |> Result.toMaybe
+
+                updatePhoto photoKey photo =
+                    if photoKey == key then
+                        { photo | dataUrl = dataUrl }
+                    else
+                        photo
+            in
+                ( Dict.map updatePhoto photosModel
+                , Cmd.none
+                )
+
+        RequestPhotoUploadSignatures ->
+            let
+                createUploadSignature : Int -> Maybe NewUploadModel -> Cmd Msg
+                createUploadSignature key maybeNewUpload =
+                    maybeNewUpload
+                        |> Maybe.map
+                            (Api.createUploadSignature
+                                (Maybe.withDefault "" apiKey)
+                                (Photos << (ReceivePhotoUploadSignature key))
+                            )
+                        |> Maybe.withDefault Cmd.none
+
+                createPhotoUploadSignature : Int -> NewPhotoModel -> Cmd Msg
+                createPhotoUploadSignature key photo =
+                    createUploadSignature
+                        key
+                        photo.newUpload
+
+                uploadSignatureCmds : List (Cmd Msg)
+                uploadSignatureCmds =
+                    photosModel
+                        |> Dict.map createPhotoUploadSignature
+                        |> Dict.toList
+                        |> List.map Tuple.second
+            in
+                photosModel ! uploadSignatureCmds
+
+        ReceivePhotoUploadSignature key uploadSignature ->
+            case Dict.get key photosModel of
+                Nothing ->
+                    let
+                        _ =
+                            Debug.log "ReceivePhotoUploadSignature" <|
+                                "No photo with this key: "
+                                    ++ (toString key)
+                    in
+                        photosModel ! []
+
+                Just newPhotoModel ->
+                    case newPhotoModel.newUpload of
+                        Nothing ->
+                            let
+                                _ =
+                                    Debug.log "ReceivePhotoUploadSignature" <|
+                                        "No newUpload for key: "
+                                            ++ (toString key)
+                            in
+                                photosModel ! []
+
+                        Just newUpload ->
+                            let
+                                _ =
+                                    Debug.log "ReceivePhotoUploadSignature" uploadSignature
+                            in
+                                photosModel
+                                    ! [ S3.uploadFile
+                                            uploadSignature
+                                            newUpload.nativeFile
+                                      ]
 
 
 updateNewPhoto : Maybe String -> NewPhotoMsg -> NewPhotoModel -> ( NewPhotoModel, Cmd Msg )
@@ -220,6 +353,7 @@ updateNewPhoto apiKey newPhotoMsg newPhotoModel =
                     newPhotoModel
                         ! [ Api.createUploadSignature
                                 (Maybe.withDefault "" apiKey)
+                                (NewPhoto << ReceiveUploadSignature)
                                 newUpload
                           ]
 

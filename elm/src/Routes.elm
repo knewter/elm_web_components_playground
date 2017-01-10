@@ -11,6 +11,7 @@ type Route
     | Cards
     | Forms
     | DatePicker
+    | Photos
 
 
 parseRoute : Url.Parser (Route -> a) a
@@ -23,6 +24,7 @@ parseRoute =
         , Url.map Forms (s "forms")
         , Url.map NewUser (s "users" </> s "new")
         , Url.map DatePicker (s "date-picker")
+        , Url.map Photos (s "photos")
         ]
 
 
@@ -49,3 +51,6 @@ toString route =
 
         DatePicker ->
             "date-picker"
+
+        Photos ->
+            "photos"

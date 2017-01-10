@@ -59,14 +59,14 @@ createNewUser newUser =
         |> send handleLoginComplete
 
 
-createUploadSignature : String -> NewUploadModel -> Cmd Msg
-createUploadSignature apiKey newUpload =
+createUploadSignature : String -> (UploadSignatureModel -> Msg) -> NewUploadModel -> Cmd Msg
+createUploadSignature apiKey tagger newUpload =
     post (apiUrl "upload_signatures")
         |> withHeader "authorization" ("Bearer " ++ apiKey)
         |> withJsonBody (newUploadEncoder newUpload)
         |> withTimeout (10 * Time.second)
         |> withExpect (Http.expectJson <| uploadSignatureDecoder)
-        |> send handleCreateUploadSignatureComplete
+        |> send (handleCreateUploadSignatureComplete tagger)
 
 
 createSubscription : Maybe String -> NewSubscriptionModel -> Cmd Msg
@@ -93,11 +93,11 @@ handleCreateSubscriptionComplete result =
                 NoOp
 
 
-handleCreateUploadSignatureComplete : Result Http.Error UploadSignatureModel -> Msg
-handleCreateUploadSignatureComplete result =
+handleCreateUploadSignatureComplete : (UploadSignatureModel -> Msg) -> Result Http.Error UploadSignatureModel -> Msg
+handleCreateUploadSignatureComplete tagger result =
     case result of
         Ok uploadSignature ->
-            NewPhoto <| ReceiveUploadSignature uploadSignature
+            tagger uploadSignature
 
         Err errorString ->
             let

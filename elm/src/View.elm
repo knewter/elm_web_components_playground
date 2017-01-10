@@ -20,6 +20,7 @@ import View.Home
 import View.Forms
 import View.DatePicker
 import View.Signup.CreateUser
+import View.Photos
 
 
 -- END VIEW MODULES
@@ -74,6 +75,7 @@ drawer model =
             , Routes.Logout
             , Cards
             , DatePicker
+            , Routes.Photos
             ]
 
         links =
@@ -175,6 +177,9 @@ routeView model =
 
                 DatePicker ->
                     View.DatePicker.view model
+
+                Routes.Photos ->
+                    View.Photos.view model
 
         Nothing ->
             text "404"

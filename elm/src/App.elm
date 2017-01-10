@@ -7,6 +7,7 @@ import Navigation
 import UrlParser as Url
 import Date
 import Ports
+import Dict
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -19,6 +20,7 @@ init location =
       , login = Model.initialLoginModel
       , apiKey = Nothing
       , newPhoto = Model.initialNewPhotoModel
+      , photos = Dict.empty
       }
     , Cmd.none
     )
