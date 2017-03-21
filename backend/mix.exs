@@ -72,4 +72,13 @@ defmodule Backend.Mixfile do
      "ecto.reset": ["ecto.drop", "ecto.setup"],
      "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
+
+  defp package do
+    [
+      maintainers: ["Josh Adams"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/knewter/elm_web_components_playground"},
+      files: ~w(mix.exs README.md lib web test)
+    ]
+  end
 end
